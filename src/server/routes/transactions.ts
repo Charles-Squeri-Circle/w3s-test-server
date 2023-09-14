@@ -4,13 +4,10 @@ import { TransactionsApi } from "../../client/generated/apis/transactions-api";
 
 const router = Router();
 
-const transactionsApi = new TransactionsApi(
-  {
-    accessToken: process.env.API_KEY,
-    isJsonMime: (mime: string) => mime.includes("json"),
-  },
-  process.env.BASE_URL
-);
+const transactionsApi = new TransactionsApi({
+  accessToken: process.env.API_KEY,
+  isJsonMime: (mime: string) => mime.includes("json"),
+});
 
 router.post(
   "/user/transactions/transfer",

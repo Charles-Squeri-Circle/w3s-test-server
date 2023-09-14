@@ -4,13 +4,10 @@ import { UsersAndPinsApi } from "../../client/generated/apis/users-and-pins-api"
 
 const router = Router();
 
-const usersAndPinsApi = new UsersAndPinsApi(
-  {
-    accessToken: process.env.API_KEY,
-    isJsonMime: (mime: string) => mime.includes("json"),
-  },
-  process.env.BASE_URL
-);
+const usersAndPinsApi = new UsersAndPinsApi({
+  accessToken: process.env.API_KEY,
+  isJsonMime: (mime: string) => mime.includes("json"),
+});
 
 router.post("/users", async (req: Request, res: Response) => {
   const response = await usersAndPinsApi.createUser({

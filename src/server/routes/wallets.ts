@@ -4,13 +4,10 @@ import { WalletsApi } from "../../client/generated/apis/wallets-api";
 
 const router = Router();
 
-const walletsApi = new WalletsApi(
-  {
-    accessToken: process.env.API_KEY,
-    isJsonMime: (mime: string) => mime.includes("json"),
-  },
-  process.env.BASE_URL
-);
+const walletsApi = new WalletsApi({
+  accessToken: process.env.API_KEY,
+  isJsonMime: (mime: string) => mime.includes("json"),
+});
 
 router.post("/user/wallets", async (req: Request, res: Response) => {
   if (req.header("X-User-Token")) {

@@ -4,13 +4,10 @@ import { WalletSetsApi } from "../../client/generated/apis/wallet-sets-api";
 
 const router = Router();
 
-const walletSetsApi = new WalletSetsApi(
-  {
-    accessToken: process.env.API_KEY,
-    isJsonMime: (mime: string) => mime.includes("json"),
-  },
-  process.env.BASE_URL
-);
+const walletSetsApi = new WalletSetsApi({
+  accessToken: process.env.API_KEY,
+  isJsonMime: (mime: string) => mime.includes("json"),
+});
 
 router.post("/developer/walletSets", async (req: Request, res: Response) => {
   const response = await walletSetsApi.createWalletSet(req.body);

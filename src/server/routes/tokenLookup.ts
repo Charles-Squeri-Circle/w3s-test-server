@@ -4,13 +4,10 @@ import { TokenLookupApi } from "../../client/generated/apis/token-lookup-api";
 
 const router = Router();
 
-const tokenLookupApi = new TokenLookupApi(
-  {
-    accessToken: process.env.API_KEY,
-    isJsonMime: (mime: string) => mime.includes("json"),
-  },
-  process.env.BASE_URL
-);
+const tokenLookupApi = new TokenLookupApi({
+  accessToken: process.env.API_KEY,
+  isJsonMime: (mime: string) => mime.includes("json"),
+});
 
 router.get("/tokens/:id", async (req: Request, res: Response) => {
   const response = await tokenLookupApi.getTokenId(req.params.id);

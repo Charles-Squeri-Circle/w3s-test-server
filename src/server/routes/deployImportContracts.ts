@@ -4,13 +4,10 @@ import { DeployImportApi } from "../../client/generated/apis/deploy-import-api";
 
 const router = Router();
 
-const deployImportApi = new DeployImportApi(
-  {
-    accessToken: process.env.API_KEY,
-    isJsonMime: (mime: string) => mime.includes("json"),
-  },
-  process.env.BASE_URL
-);
+const deployImportApi = new DeployImportApi({
+  accessToken: process.env.API_KEY,
+  isJsonMime: (mime: string) => mime.includes("json"),
+});
 
 router.post("/contracts/import", async (req: Request, res: Response) => {
   const response = await deployImportApi.importContact(req.body);

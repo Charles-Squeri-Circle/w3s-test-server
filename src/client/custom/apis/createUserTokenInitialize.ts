@@ -5,28 +5,18 @@ import { UsersAndPinsApi } from "../../generated/apis/users-and-pins-api";
 import { WalletsApi } from "../../generated/apis/wallets-api";
 import { CreateUserTokenInitialize } from "../models/createUserTokenInitialize";
 
-const developerAccountApi = new DeveloperAccountApi(
-  {
-    accessToken: process.env.API_KEY,
-    isJsonMime: (mime: string) => mime.includes("json"),
-  },
-  process.env.BASE_URL
-);
-
-const usersAndPinsApi = new UsersAndPinsApi(
-  {
-    accessToken: process.env.API_KEY,
-    isJsonMime: (mime: string) => mime.includes("json"),
-  },
-  process.env.BASE_URL
-);
-const walletsApi = new WalletsApi(
-  {
-    accessToken: process.env.API_KEY,
-    isJsonMime: (mime: string) => mime.includes("json"),
-  },
-  process.env.BASE_URL
-);
+const developerAccountApi = new DeveloperAccountApi({
+  accessToken: process.env.API_KEY,
+  isJsonMime: (mime: string) => mime.includes("json"),
+});
+const usersAndPinsApi = new UsersAndPinsApi({
+  accessToken: process.env.API_KEY,
+  isJsonMime: (mime: string) => mime.includes("json"),
+});
+const walletsApi = new WalletsApi({
+  accessToken: process.env.API_KEY,
+  isJsonMime: (mime: string) => mime.includes("json"),
+});
 
 export async function CreateUserTokenInitialize() {
   const getAppIdResponseData = await getAppId();
@@ -55,6 +45,7 @@ export async function CreateUserTokenInitialize() {
   return createUserTokenInitialize;
 }
 
+// 1. Acquire the APP ID
 async function getAppId() {
   try {
     const response = await developerAccountApi.getEntityConfig();

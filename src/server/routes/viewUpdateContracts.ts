@@ -4,13 +4,10 @@ import { ViewUpdateApi } from "../../client/generated/apis/view-update-api";
 
 const router = Router();
 
-const viewUpdateApi = new ViewUpdateApi(
-  {
-    accessToken: process.env.API_KEY,
-    isJsonMime: (mime: string) => mime.includes("json"),
-  },
-  process.env.BASE_URL
-);
+const viewUpdateApi = new ViewUpdateApi({
+  accessToken: process.env.API_KEY,
+  isJsonMime: (mime: string) => mime.includes("json"),
+});
 
 router.get("/contracts/", async (req: Request, res: Response) => {
   const response = await viewUpdateApi.listContracts(

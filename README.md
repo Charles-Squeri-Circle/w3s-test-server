@@ -1,19 +1,39 @@
-# w3s-test-server
-This ReadMe file is a work in progress.
+# Web3 Services Test Server
 
-## Setup
-1. Install package dependencies. Run `npm install` in root of the repo.
-2. Install package dependencies within `src/client/generated/` running npm install here as well.
-3. Create a `.env` file in the root of the repo. 
-4. In the `.env` set your API key `API_KEY="<API_KEY>"`. _If you do not have an API key please go to [Circle's Dev Console](https://developers.circle.com/) where you can get one._
-5. In the `.env` add the base URL `BASE_URL="https://api.circle.com/v1/w3s"`
-6. Start the development server `npm run start` !
+<h4 align="center">Accelerate Integration to Circle's Web3 Services (W3S) APIs with Our Test Server</h4>
 
-Now you can send request to `http://localhost:3000/v1/w3s/*` and use the server as a proxy to for your client app.
-## Internal Notes
+Our Test Server, built with Node.js and Typescript using the Express.js framework, offers simple routing for developers looking to seamlessly connect their client app with Circle's W3S APIs.
+
+**Initial Setup Steps:**
+1. Install package dependencies
+```
+npm install
+```
+2. Create a `.env` file and add your API key.  
+   * _NOTE: You can go to [Circle's Dev Console](https://developers.circle.com/) to acquire an API key if you do not already have one._
+```
+API_KEY="<API_KEY>"
+```
+3. Start the test server
+```
+npm run start
+```
+4. Send your first API request!
+```
+curl --location 'http://localhost:3000/v1/w3s/wallets'
+```
+
+## Additional Helper Functions
+| Function | Description |
+| --- | --- |
+| `createUserTokenInitialize.ts` | Provides all the values needed to create your first user controlled wallet. |
+
+## Additional Notes
 
 ### Generated Code
-The code found in `src/client/generated` is generated from Circle's OAS found in [w3s-openapi-internal](https://github.com/circlefin/w3s-openapi-internal) using the `src/client/generated/w3s-openapi.yaml` file. More specifically using the following command
+The code found in `src/client/generated` is generated from Circle's OpenAPI Specification (OAS) using the `src/client/generated/w3s-openapi.yaml` file. This was done using the [openapi-generator-cli](https://openapi-generator.tech) and the [typescript-axios generator](https://openapi-generator.tech/docs/generators/typescript-axios/).
+
+To reproduce the generated code you can run the following command.
 ```
 npx @openapitools/openapi-generator-cli generate -g typescript-axios  \
 -i src/client/generated/w3s-openapi.yaml \

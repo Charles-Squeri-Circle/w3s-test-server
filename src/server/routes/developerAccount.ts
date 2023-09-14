@@ -4,13 +4,10 @@ import { DeveloperAccountApi } from "../../client/generated/apis/developer-accou
 
 const router = Router();
 
-const developerAccountApi = new DeveloperAccountApi(
-  {
-    accessToken: process.env.API_KEY,
-    isJsonMime: (mime: string) => mime.includes("json"),
-  },
-  process.env.BASE_URL
-);
+const developerAccountApi = new DeveloperAccountApi({
+  accessToken: process.env.API_KEY,
+  isJsonMime: (mime: string) => mime.includes("json"),
+});
 
 router.get("/", async (req: Request, res: Response) => {
   const response = await developerAccountApi.getEntityConfig();
