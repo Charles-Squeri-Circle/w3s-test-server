@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DeveloperAccountApi } from "../../generated/apis/developer-account-api";
 import { UsersAndPinsApi } from "../../generated/apis/users-and-pins-api";
 import { WalletsApi } from "../../generated/apis/wallets-api";
-import { CreateUserTokenInitialize } from "../models/createUserTokenInitialize";
+import { CreateUserTokenChallengeId } from "../models/createUserTokenChallengeId";
 
 const developerAccountApi = new DeveloperAccountApi({
   accessToken: process.env.API_KEY,
@@ -18,7 +18,7 @@ const walletsApi = new WalletsApi({
   isJsonMime: (mime: string) => mime.includes("json"),
 });
 
-export async function CreateUserTokenInitialize() {
+export async function CreateUserTokenChallengeId() {
   const getAppIdResponseData = await getAppId();
 
   const userId = uuidv4();
@@ -33,7 +33,7 @@ export async function CreateUserTokenInitialize() {
     );
   }
 
-  const createUserTokenInitialize: CreateUserTokenInitialize = {
+  const createUserTokenChallengeId: CreateUserTokenChallengeId = {
     data: {
       appId: getAppIdResponseData?.data?.appId,
       userToken: createUserTokenResponseData?.data?.userToken,
@@ -42,7 +42,7 @@ export async function CreateUserTokenInitialize() {
     },
   };
 
-  return createUserTokenInitialize;
+  return createUserTokenChallengeId;
 }
 
 // 1. Acquire the APP ID

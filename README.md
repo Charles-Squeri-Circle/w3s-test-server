@@ -23,23 +23,20 @@ npm run start
 curl --location 'http://localhost:3000/v1/w3s/wallets'
 ```
 
-## Additional Helper Functions
-| Function | Description |
+## Additional Helper APIs
+| API | Description |
 | --- | --- |
-| `createUserTokenInitialize.ts` | Provides all the values needed to create your first user controlled wallet. |
+| `POST /v1/w3s/createUserTokenChallengeId` | Makes a sequence of API request to return the `appId`, `userToken`, `encryptionKey`, and `challengeId` needed to [create your first user-controlled wallet](https://developers.circle.com/w3s/docs/user-controlled-create-your-first-wallet).
 
 ## Additional Notes
 
 ### Generated Code
 The code found in `src/client/generated` is generated from Circle's OpenAPI Specification (OAS) using the `src/client/generated/w3s-openapi.yaml` file. This was done using the [openapi-generator-cli](https://openapi-generator.tech) and the [typescript-axios generator](https://openapi-generator.tech/docs/generators/typescript-axios/).
 
-To reproduce the generated code you can run the following command.
+To reproduce the generated code you can run the following command:
 ```
 npx @openapitools/openapi-generator-cli generate -g typescript-axios  \
 -i src/client/generated/w3s-openapi.yaml \
 -o src/client/generated/ \
 -p npmName=circle,supportsES6=true,modelPropertyNaming=original,apiPackage=apis,modelPackage=models --additional-properties=withSeparateModelsAndApi=true
 ```
-### Edits to OAS file
-1. Consolidated OAS files into one aggregate.
-2. Updated `/config` APIs paths. There were duplicates of `/v1/w3s` because of baseURL change.

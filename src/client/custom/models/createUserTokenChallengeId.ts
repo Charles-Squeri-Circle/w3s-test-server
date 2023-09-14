@@ -1,4 +1,4 @@
-export interface CreateUserTokenInitialize {
+export interface CreateUserTokenChallengeId {
     data: {
       appId: string | undefined;
       userToken: string | undefined;

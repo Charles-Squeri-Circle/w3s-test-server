@@ -8,7 +8,7 @@ import walletSets from "./routes/walletSets";
 import deployImportContracts from "./routes/deployImportContracts";
 import interactContracts from "./routes/interactContracts";
 import viewUpdateContracts from "./routes/viewUpdateContracts";
-import createUserTokenInitialize from "./routes/createUserTokenInitialize";
+import createUserTokenChallengeId from "./routes/createUserTokenChallengeId";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -23,7 +23,7 @@ app.use("/v1/w3s", walletSets);
 app.use("/v1/w3s", deployImportContracts);
 app.use("/v1/w3s", interactContracts);
 app.use("/v1/w3s", viewUpdateContracts);
-app.use("/v1/w3s/createUserTokenInitialize", createUserTokenInitialize);
+app.use("/v1/w3s", createUserTokenChallengeId);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
