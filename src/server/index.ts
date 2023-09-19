@@ -1,4 +1,5 @@
 import express from "express";
+import fs from "fs";
 import developerAccount from "./routes/developerAccount";
 import userAndPins from "./routes/usersAndPins";
 import wallets from "./routes/wallets";
@@ -28,14 +29,37 @@ app.use("/v1/w3s", viewUpdateContracts);
 app.use("/v1/w3s", createUserTokenChallengeId);
 app.use("/v1/w3s", createEntitySecretCiphertext);
 
-
+// Starts express server, checks setup, and initializes entity secret.
 (async () => {
-  if (!process.env.ENTITY_SECRET) {
-    const entitySecretCiphertext: string | undefined = await CreateEntitySecretCiphertext();
-    console.log("If you intend to use developer-controlled wallets, register the following 684 character entity secret ciphertext on: https://console.circle.com/wallets/dev/configurator: \n\n" + entitySecretCiphertext + "\n\nYou can make a POST request to http://localhost:3000/v1/w3s/createEntitySecretCiphertext to retrieve this value again. \n");
+  try {
+    await fs.promises.access(".env", fs.constants.F_OK);
+  } catch (error) {
+    console.log("SETUP ERROR: The .env file doesn't exist. Please create it and add your API key: API_KEY=\"<API_KEY>\"\n\nTo acquire an API key go to https://console.circle.com\n");
+    process.exit(1);
   }
+
+  if (!process.env.API_KEY) {
+    console.log("SETUP ERROR: The API_KEY environment variable doesn't exist. Please it to the .env file: API_KEY=\"<API_KEY>\"\n\nTo acquire an API key go to https://console.circle.com\n");
+    process.exit(1);
+  }
+
+  if (!process.env.ENTITY_SECRET) {
+    try {
+      const entitySecretCiphertext: string | undefined =
+        await CreateEntitySecretCiphertext();
+      console.log(
+        "If you intend to use developer-controlled wallets, register the following 684 character entity secret ciphertext on: https://console.circle.com/wallets/dev/configurator \n\n" +
+          entitySecretCiphertext +
+          "\n\nYou can make a POST request to http://localhost:3000/v1/w3s/createEntitySecretCiphertext to retrieve this value again. \n"
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+  });
 })();
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+
