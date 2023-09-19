@@ -50,7 +50,7 @@ app.use("/v1/w3s", createEntitySecretCiphertext);
       console.log(
         "If you intend to use developer-controlled wallets, register the following 684 character entity secret ciphertext on: https://console.circle.com/wallets/dev/configurator \n\n" +
           entitySecretCiphertext +
-          "\n\nYou can make a POST request to http://localhost:3000/v1/w3s/createEntitySecretCiphertext to retrieve this value again. \n"
+          "\n\nTo retrieve this value again, make a POST request to http://localhost:3000/v1/w3s/createEntitySecretCiphertext\n"
       );
     } catch (error) {
       console.error(error);
