@@ -10,36 +10,63 @@ const viewUpdateApi = new ViewUpdateApi({
 });
 
 router.get("/contracts/", async (req: Request, res: Response) => {
-  const response = await viewUpdateApi.listContracts(
-    //@ts-ignore
-    req.query.blockchain,
-    req.query.contractInputType,
-    req.query.deployerAddress,
-    req.query.name,
-    req.query.status,
-    req.query.from,
-    req.query.to,
-    req.query.pageBefore,
-    req.query.pageAfter,
-    req.query.pageSize
-  );
-  res
-    .header("X-Request-Id", response.headers["x-request-id"])
-    .send(response.data);
+  try {
+    const response = await viewUpdateApi.listContracts(
+      //@ts-ignore
+      req.query.blockchain,
+      req.query.contractInputType,
+      req.query.deployerAddress,
+      req.query.name,
+      req.query.status,
+      req.query.from,
+      req.query.to,
+      req.query.pageBefore,
+      req.query.pageAfter,
+      req.query.pageSize
+    );
+    res.header(response.headers).send(response.data);
+  } catch (error) {
+    res
+      //@ts-ignore
+      .status(error.response.status)
+      //@ts-ignore
+      .header(error.response.header)
+      //@ts-ignore
+      .send(error.response.data);
+  }
 });
 
 router.get("/contracts/:id", async (req: Request, res: Response) => {
-  const response = await viewUpdateApi.getContract(req.params.id);
-  res
-    .header("X-Request-Id", response.headers["x-request-id"])
-    .send(response.data);
+  try {
+    const response = await viewUpdateApi.getContract(req.params.id);
+    res.header(response.headers).send(response.data);
+  } catch (error) {
+    res
+      //@ts-ignore
+      .status(error.response.status)
+      //@ts-ignore
+      .header(error.response.header)
+      //@ts-ignore
+      .send(error.response.data);
+  }
 });
 
 router.patch("/contracts/:id", async (req: Request, res: Response) => {
-  const response = await viewUpdateApi.updateContract(req.params.id, req.body);
-  res
-    .header("X-Request-Id", response.headers["x-request-id"])
-    .send(response.data);
+  try {
+    const response = await viewUpdateApi.updateContract(
+      req.params.id,
+      req.body
+    );
+    res.header(response.headers).send(response.data);
+  } catch (error) {
+    res
+      //@ts-ignore
+      .status(error.response.status)
+      //@ts-ignore
+      .header(error.response.header)
+      //@ts-ignore
+      .send(error.response.data);
+  }
 });
 
 export default router;

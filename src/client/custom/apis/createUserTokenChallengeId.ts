@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DeveloperAccountApi } from "../../generated/apis/developer-account-api";
 import { UsersAndPinsApi } from "../../generated/apis/users-and-pins-api";
 import { WalletsApi } from "../../generated/apis/wallets-api";
-import { CreateUserTokenChallengeId } from "../models/createUserTokenChallengeId";
+import { CreateUserTokenChallengeId } from "../models/CreateUserTokenChallengeId";
 
 const developerAccountApi = new DeveloperAccountApi({
   accessToken: process.env.API_KEY,
@@ -19,30 +19,34 @@ const walletsApi = new WalletsApi({
 });
 
 export async function CreateUserTokenChallengeId() {
-  const getAppIdResponseData = await getAppId();
+  try {
+    const getAppIdResponseData = await getAppId();
 
-  const userId = uuidv4();
-  await createUser(userId);
+    const userId = uuidv4();
+    await createUser(userId);
 
-  const createUserTokenResponseData = await createUserToken(userId);
+    const createUserTokenResponseData = await createUserToken(userId);
 
-  let initializeUserResponseData;
-  if (createUserTokenResponseData && createUserTokenResponseData.data) {
-    initializeUserResponseData = await initializeUser(
-      createUserTokenResponseData?.data?.userToken
-    );
-  }
+    let initializeUserResponseData;
+    if (createUserTokenResponseData && createUserTokenResponseData.data) {
+      initializeUserResponseData = await initializeUser(
+        createUserTokenResponseData?.data?.userToken
+      );
+    }
 
-  const createUserTokenChallengeId: CreateUserTokenChallengeId = {
-    data: {
-      appId: getAppIdResponseData?.data?.appId,
-      userToken: createUserTokenResponseData?.data?.userToken,
-      encryptionKey: createUserTokenResponseData?.data?.encryptionKey,
-      challengeId: initializeUserResponseData?.data?.challengeId,
-    },
-  };
+    const createUserTokenChallengeId: CreateUserTokenChallengeId = {
+      data: {
+        appId: getAppIdResponseData?.data?.appId,
+        userToken: createUserTokenResponseData?.data?.userToken,
+        encryptionKey: createUserTokenResponseData?.data?.encryptionKey,
+        challengeId: initializeUserResponseData?.data?.challengeId,
+      },
+    };
 
-  return createUserTokenChallengeId;
+    return createUserTokenChallengeId;
+  } catch (error) {
+    throw error
+  } 
 }
 
 // 1. Acquire the APP ID
@@ -51,7 +55,7 @@ async function getAppId() {
     const response = await developerAccountApi.getEntityConfig();
     return response.data;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -62,7 +66,7 @@ async function createUser(userId: string) {
       userId: userId,
     });
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -74,7 +78,7 @@ async function createUserToken(userId: string) {
     });
     return response.data;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -90,7 +94,7 @@ async function initializeUser(userToken: string) {
     );
     return response.data;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -102,7 +106,7 @@ async function getUserStatus(userToken: string) {
     const response = await usersAndPinsApi.getUserByToken(userToken);
     return response.data;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -112,6 +116,6 @@ async function getUserWallets(userToken: string) {
     const response = await walletsApi.listWallets(userToken);
     return response.data;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }

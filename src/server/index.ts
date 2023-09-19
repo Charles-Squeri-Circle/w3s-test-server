@@ -9,6 +9,7 @@ import deployImportContracts from "./routes/deployImportContracts";
 import interactContracts from "./routes/interactContracts";
 import viewUpdateContracts from "./routes/viewUpdateContracts";
 import createUserTokenChallengeId from "./routes/createUserTokenChallengeId";
+import createEntitySecretCiphertext from "./routes/createEntitySecretCiphertext";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,6 +25,7 @@ app.use("/v1/w3s", deployImportContracts);
 app.use("/v1/w3s", interactContracts);
 app.use("/v1/w3s", viewUpdateContracts);
 app.use("/v1/w3s", createUserTokenChallengeId);
+app.use("/v1/w3s", createEntitySecretCiphertext);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

@@ -10,17 +10,33 @@ const developerAccountApi = new DeveloperAccountApi({
 });
 
 router.get("/", async (req: Request, res: Response) => {
-  const response = await developerAccountApi.getEntityConfig();
-  res
-    .header("X-Request-Id", response.headers["x-request-id"])
-    .send(response.data);
+  try {
+    const response = await developerAccountApi.getEntityConfig();
+    res.header(response.headers).send(response.data);
+  } catch (error) {
+    res
+      //@ts-ignore
+      .status(error.response.status)
+      //@ts-ignore
+      .header(error.response.header)
+      //@ts-ignore
+      .send(error.response.data);
+  }
 });
 
 router.get("/publicKey", async (req: Request, res: Response) => {
-  const response = await developerAccountApi.getPublicKey();
-  res
-    .header("X-Request-Id", response.headers["x-request-id"])
-    .send(response.data);
+  try {
+    const response = await developerAccountApi.getPublicKey();
+    res.header(response.headers).send(response.data);
+  } catch (error) {
+    res
+      //@ts-ignore
+      .status(error.response.status)
+      //@ts-ignore
+      .header(error.response.header)
+      //@ts-ignore
+      .send(error.response.data);
+  }
 });
 
 export default router;

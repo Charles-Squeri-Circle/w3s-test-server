@@ -10,10 +10,18 @@ const interactApi = new InteractApi({
 });
 
 router.post("/contracts/:id/read", async (req: Request, res: Response) => {
-  const response = await interactApi.readContract(req.params.id, req.body);
-  res
-    .header("X-Request-Id", response.headers["x-request-id"])
-    .send(response.data);
+  try {
+    const response = await interactApi.readContract(req.params.id, req.body);
+    res.header(response.headers).send(response.data);
+  } catch (error) {
+    res
+      //@ts-ignore
+      .status(error.response.status)
+      //@ts-ignore
+      .header(error.response.header)
+      //@ts-ignore
+      .send(error.response.data);
+  }
 });
 
 export default router;

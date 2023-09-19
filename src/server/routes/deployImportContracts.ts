@@ -10,26 +10,50 @@ const deployImportApi = new DeployImportApi({
 });
 
 router.post("/contracts/import", async (req: Request, res: Response) => {
-  const response = await deployImportApi.importContact(req.body);
-  res
-    .header("X-Request-Id", response.headers["x-request-id"])
-    .send(response.data);
+  try {
+    const response = await deployImportApi.importContact(req.body);
+    res.header(response.headers).send(response.data);
+  } catch (error) {
+    res
+      //@ts-ignore
+      .status(error.response.status)
+      //@ts-ignore
+      .header(error.response.header)
+      //@ts-ignore
+      .send(error.response.data);
+  }
 });
 
 router.post("/contracts/deploy", async (req: Request, res: Response) => {
-  const response = await deployImportApi.deployContract(req.body);
-  res
-    .header("X-Request-Id", response.headers["x-request-id"])
-    .send(response.data);
+  try {
+    const response = await deployImportApi.deployContract(req.body);
+    res.header(response.headers).send(response.data);
+  } catch (error) {
+    res
+      //@ts-ignore
+      .status(error.response.status)
+      //@ts-ignore
+      .header(error.response.header)
+      //@ts-ignore
+      .send(error.response.data);
+  }
 });
 
 router.post(
   "/contracts/deploy/estimateFee",
   async (req: Request, res: Response) => {
-    const response = await deployImportApi.estimateContractDeploy(req.body);
-    res
-      .header("X-Request-Id", response.headers["x-request-id"])
-      .send(response.data);
+    try {
+      const response = await deployImportApi.estimateContractDeploy(req.body);
+      res.header(response.headers).send(response.data);
+    } catch (error) {
+      res
+        //@ts-ignore
+        .status(error.response.status)
+        //@ts-ignore
+        .header(error.response.header)
+        //@ts-ignore
+        .send(error.response.data);
+    }
   }
 );
 

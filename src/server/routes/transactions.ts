@@ -14,14 +14,22 @@ router.post(
   async (req: Request, res: Response) => {
     if (req.header("X-User-Token")) {
       const xUserToken: string = req.header("X-User-Token")!;
-      const response =
-        await transactionsApi.createUserTransactionTransferChallenge(
-          xUserToken,
-          req.body
-        );
-      res
-        .header("X-Request-Id", response.headers["x-request-id"])
-        .send(response.data);
+      try {
+        const response =
+          await transactionsApi.createUserTransactionTransferChallenge(
+            xUserToken,
+            req.body
+          );
+        res.header(response.headers).send(response.data);
+      } catch (error) {
+        res
+          //@ts-ignore
+          .status(error.response.status)
+          //@ts-ignore
+          .header(error.response.header)
+          //@ts-ignore
+          .send(error.response.data);
+      }
     } else {
       res.send("Please add an X-User-Token to the header");
     }
@@ -34,15 +42,23 @@ router.post(
   async (req: Request, res: Response) => {
     if (req.header("X-User-Token")) {
       const xUserToken: string = req.header("X-User-Token")!;
-      const response =
-        await transactionsApi.createUserTransactionAccelerateChallenge(
-          req.params.id,
-          xUserToken,
-          req.body
-        );
-      res
-        .header("X-Request-Id", response.headers["x-request-id"])
-        .send(response.data);
+      try {
+        const response =
+          await transactionsApi.createUserTransactionAccelerateChallenge(
+            req.params.id,
+            xUserToken,
+            req.body
+          );
+        res.header(response.headers).send(response.data);
+      } catch (error) {
+        res
+          //@ts-ignore
+          .status(error.response.status)
+          //@ts-ignore
+          .header(error.response.header)
+          //@ts-ignore
+          .send(error.response.data);
+      }
     } else {
       res.send("Please add an X-User-Token to the header");
     }
@@ -54,15 +70,23 @@ router.post(
   async (req: Request, res: Response) => {
     if (req.header("X-User-Token")) {
       const xUserToken: string = req.header("X-User-Token")!;
-      const response =
-        await transactionsApi.createUserTransactionCancelChallenge(
-          req.params.id,
-          xUserToken,
-          req.body
-        );
-      res
-        .header("X-Request-Id", response.headers["x-request-id"])
-        .send(response.data);
+      try {
+        const response =
+          await transactionsApi.createUserTransactionCancelChallenge(
+            req.params.id,
+            xUserToken,
+            req.body
+          );
+        res.header(response.headers).send(response.data);
+      } catch (error) {
+        res
+          //@ts-ignore
+          .status(error.response.status)
+          //@ts-ignore
+          .header(error.response.header)
+          //@ts-ignore
+          .send(error.response.data);
+      }
     } else {
       res.send("Please add an X-User-Token to the header");
     }
@@ -74,14 +98,22 @@ router.post(
   async (req: Request, res: Response) => {
     if (req.header("X-User-Token")) {
       const xUserToken: string = req.header("X-User-Token")!;
-      const response =
-        await transactionsApi.createUserTransactionContractExecutionChallenge(
-          xUserToken,
-          req.body
-        );
-      res
-        .header("X-Request-Id", response.headers["x-request-id"])
-        .send(response.data);
+      try {
+        const response =
+          await transactionsApi.createUserTransactionContractExecutionChallenge(
+            xUserToken,
+            req.body
+          );
+        res.header(response.headers).send(response.data);
+      } catch (error) {
+        res
+          //@ts-ignore
+          .status(error.response.status)
+          //@ts-ignore
+          .header(error.response.header)
+          //@ts-ignore
+          .send(error.response.data);
+      }
     } else {
       res.send("Please add an X-User-Token to the header");
     }
@@ -91,12 +123,20 @@ router.post(
 router.post(
   "/developer/transactions/transfer",
   async (req: Request, res: Response) => {
-    const response = await transactionsApi.createDeveloperTransactionTransfer(
-      req.body
-    );
-    res
-      .header("X-Request-Id", response.headers["x-request-id"])
-      .send(response.data);
+    try {
+      const response = await transactionsApi.createDeveloperTransactionTransfer(
+        req.body
+      );
+      res.header(response.headers).send(response.data);
+    } catch (error) {
+      res
+        //@ts-ignore
+        .status(error.response.status)
+        //@ts-ignore
+        .header(error.response.header)
+        //@ts-ignore
+        .send(error.response.data);
+    }
   }
 );
 
@@ -104,111 +144,178 @@ router.post(
 router.post(
   "/developer/transactions/:id/accelerate",
   async (req: Request, res: Response) => {
-    const response = await transactionsApi.createDeveloperTransactionAccelerate(
-      req.params.id,
-      req.body
-    );
-    res
-      .header("X-Request-Id", response.headers["x-request-id"])
-      .send(response.data);
+    try {
+      const response =
+        await transactionsApi.createDeveloperTransactionAccelerate(
+          req.params.id,
+          req.body
+        );
+      res.header(response.headers).send(response.data);
+    } catch (error) {
+      res
+        //@ts-ignore
+        .status(error.response.status)
+        //@ts-ignore
+        .header(error.response.header)
+        //@ts-ignore
+        .send(error.response.data);
+    }
   }
 );
 
 router.post(
   "/developer/transactions/:id/cancel",
   async (req: Request, res: Response) => {
-    const response = await transactionsApi.createDeveloperTransactionCancel(
-      req.params.id,
-      req.body
-    );
-    res
-      .header("X-Request-Id", response.headers["x-request-id"])
-      .send(response.data);
+    try {
+      const response = await transactionsApi.createDeveloperTransactionCancel(
+        req.params.id,
+        req.body
+      );
+      res.header(response.headers).send(response.data);
+    } catch (error) {
+      res
+        //@ts-ignore
+        .status(error.response.status)
+        //@ts-ignore
+        .header(error.response.header)
+        //@ts-ignore
+        .send(error.response.data);
+    }
   }
 );
 
 router.post(
   "/developer/transactions/contractExecution",
   async (req: Request, res: Response) => {
-    const response =
-      await transactionsApi.createDeveloperTransactionContractExecution(
-        req.body
-      );
-    res
-      .header("X-Request-Id", response.headers["x-request-id"])
-      .send(response.data);
+    try {
+      const response =
+        await transactionsApi.createDeveloperTransactionContractExecution(
+          req.body
+        );
+      res.header(response.headers).send(response.data);
+    } catch (error) {
+      res
+        //@ts-ignore
+        .status(error.response.status)
+        //@ts-ignore
+        .header(error.response.header)
+        //@ts-ignore
+        .send(error.response.data);
+    }
   }
 );
 
 // Added X-User-Token to OAS file since I used developer controlled wallets
 router.get("/transactions", async (req: Request, res: Response) => {
-  const response = await transactionsApi.listTransactions(
-    req.header("X-User-Token"),
-    //@ts-ignore
-    req.query.blockchain,
-    req.query.custodyType,
-    req.query.destinationAddress,
-    req.query.includeAll,
-    req.query.operation,
-    req.query.state,
-    req.query.txHash,
-    req.query.txType,
-    req.query.userId,
-    req.query.walletIds,
-    req.query.from,
-    req.query.to,
-    req.query.pageBefore,
-    req.query.pageAfter,
-    req.query.pageSize
-  );
-  res
-    .header("X-Request-Id", response.headers["x-request-id"])
-    .send(response.data);
+  try {
+    const response = await transactionsApi.listTransactions(
+      req.header("X-User-Token"),
+      //@ts-ignore
+      req.query.blockchain,
+      req.query.custodyType,
+      req.query.destinationAddress,
+      req.query.includeAll,
+      req.query.operation,
+      req.query.state,
+      req.query.txHash,
+      req.query.txType,
+      req.query.userId,
+      req.query.walletIds,
+      req.query.from,
+      req.query.to,
+      req.query.pageBefore,
+      req.query.pageAfter,
+      req.query.pageSize
+    );
+    res.header(response.headers).send(response.data);
+  } catch (error) {
+    res
+      //@ts-ignore
+      .status(error.response.status)
+      //@ts-ignore
+      .header(error.response.header)
+      //@ts-ignore
+      .send(error.response.data);
+  }
 });
 
 router.get("/transactions/:id", async (req: Request, res: Response) => {
-  const response = await transactionsApi.getTransaction(
-    req.params.id,
-    req.header("X-User-Token"),
-    //@ts-ignore
-    req.query.txType
-  );
-  res
-    .header("X-Request-Id", response.headers["x-request-id"])
-    .send(response.data);
+  try {
+    const response = await transactionsApi.getTransaction(
+      req.params.id,
+      req.header("X-User-Token"),
+      //@ts-ignore
+      req.query.txType
+    );
+    res.header(response.headers).send(response.data);
+  } catch (error) {
+    res
+      //@ts-ignore
+      .status(error.response.status)
+      //@ts-ignore
+      .header(error.response.header)
+      //@ts-ignore
+      .send(error.response.data);
+  }
 });
 
 router.post(
   "/transactions/transfer/estimateFee",
   async (req: Request, res: Response) => {
-    const response = await transactionsApi.createTransferEstimateFee(req.body);
-    res
-      .header("X-Request-Id", response.headers["x-request-id"])
-      .send(response.data);
+    try {
+      const response = await transactionsApi.createTransferEstimateFee(
+        req.body
+      );
+      res.header(response.headers).send(response.data);
+    } catch (error) {
+      res
+        //@ts-ignore
+        .status(error.response.status)
+        //@ts-ignore
+        .header(error.response.header)
+        //@ts-ignore
+        .send(error.response.data);
+    }
   }
 );
 
 router.post(
   "/transactions/transfer/estimateFee",
   async (req: Request, res: Response) => {
-    const response = await transactionsApi.createTransactionEstimateFee(
-      req.body
-    );
-    res
-      .header("X-Request-Id", response.headers["x-request-id"])
-      .send(response.data);
+    try {
+      const response = await transactionsApi.createTransactionEstimateFee(
+        req.body
+      );
+      res.header(response.headers).send(response.data);
+    } catch (error) {
+      res
+        //@ts-ignore
+        .status(error.response.status)
+        //@ts-ignore
+        .header(error.response.header)
+        //@ts-ignore
+        .send(error.response.data);
+    }
   }
 );
 
 router.post(
   "/transactions/validateAddress",
   async (req: Request, res: Response) => {
-    const response = await transactionsApi.createTransactionEstimateFee(
-      req.body
-    );
-    res
-      .header("X-Request-Id", response.headers["x-request-id"])
-      .send(response.data);
+    try {
+      const response = await transactionsApi.createTransactionEstimateFee(
+        req.body
+      );
+      res.header(response.headers).send(response.data);
+    } catch (error) {
+      res
+        //@ts-ignore
+        .status(error.response.status)
+        //@ts-ignore
+        .header(error.response.header)
+        //@ts-ignore
+        .send(error.response.data);
+    }
   }
 );
 
