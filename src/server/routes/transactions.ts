@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { Router, Request, Response } from "express";
 import { TransactionsApi } from "../../client/generated/apis/transactions-api";
+import { CreateEntitySecretCiphertext } from "../../client/custom/apis/createEntitySecretCiphertext";
 
 const router = Router();
 
@@ -124,10 +125,14 @@ router.post(
   "/developer/transactions/transfer",
   async (req: Request, res: Response) => {
     try {
-      const response = await transactionsApi.createDeveloperTransactionTransfer(
-        req.body
-      );
-      res.header(response.headers).send(response.data);
+      const entitySecretCiphertext: string | undefined =
+        await CreateEntitySecretCiphertext();
+      if (typeof entitySecretCiphertext === "string") {
+        req.body.entitySecretCiphertext = entitySecretCiphertext!;
+        const response =
+          await transactionsApi.createDeveloperTransactionTransfer(req.body);
+        res.header(response.headers).send(response.data);
+      }
     } catch (error) {
       res
         //@ts-ignore
@@ -145,12 +150,17 @@ router.post(
   "/developer/transactions/:id/accelerate",
   async (req: Request, res: Response) => {
     try {
-      const response =
-        await transactionsApi.createDeveloperTransactionAccelerate(
-          req.params.id,
-          req.body
-        );
-      res.header(response.headers).send(response.data);
+      const entitySecretCiphertext: string | undefined =
+        await CreateEntitySecretCiphertext();
+      if (typeof entitySecretCiphertext === "string") {
+        req.body.entitySecretCiphertext = entitySecretCiphertext!;
+        const response =
+          await transactionsApi.createDeveloperTransactionAccelerate(
+            req.params.id,
+            req.body
+          );
+        res.header(response.headers).send(response.data);
+      }
     } catch (error) {
       res
         //@ts-ignore
@@ -167,11 +177,16 @@ router.post(
   "/developer/transactions/:id/cancel",
   async (req: Request, res: Response) => {
     try {
-      const response = await transactionsApi.createDeveloperTransactionCancel(
-        req.params.id,
-        req.body
-      );
-      res.header(response.headers).send(response.data);
+      const entitySecretCiphertext: string | undefined =
+        await CreateEntitySecretCiphertext();
+      if (typeof entitySecretCiphertext === "string") {
+        req.body.entitySecretCiphertext = entitySecretCiphertext!;
+        const response = await transactionsApi.createDeveloperTransactionCancel(
+          req.params.id,
+          req.body
+        );
+        res.header(response.headers).send(response.data);
+      }
     } catch (error) {
       res
         //@ts-ignore
@@ -188,11 +203,16 @@ router.post(
   "/developer/transactions/contractExecution",
   async (req: Request, res: Response) => {
     try {
-      const response =
-        await transactionsApi.createDeveloperTransactionContractExecution(
-          req.body
-        );
-      res.header(response.headers).send(response.data);
+      const entitySecretCiphertext: string | undefined =
+        await CreateEntitySecretCiphertext();
+      if (typeof entitySecretCiphertext === "string") {
+        req.body.entitySecretCiphertext = entitySecretCiphertext!;
+        const response =
+          await transactionsApi.createDeveloperTransactionContractExecution(
+            req.body
+          );
+        res.header(response.headers).send(response.data);
+      }
     } catch (error) {
       res
         //@ts-ignore

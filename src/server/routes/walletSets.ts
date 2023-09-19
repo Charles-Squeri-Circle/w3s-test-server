@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { Router, Request, Response } from "express";
 import { WalletSetsApi } from "../../client/generated/apis/wallet-sets-api";
+import { CreateEntitySecretCiphertext } from "../../client/custom/apis/createEntitySecretCiphertext";
 
 const router = Router();
 
@@ -11,8 +12,13 @@ const walletSetsApi = new WalletSetsApi({
 
 router.post("/developer/walletSets", async (req: Request, res: Response) => {
   try {
-    const response = await walletSetsApi.createWalletSet(req.body);
-    res.header(response.headers).send(response.data);
+    const entitySecretCiphertext: string | undefined =
+      await CreateEntitySecretCiphertext();
+    if (typeof entitySecretCiphertext === "string") {
+      req.body.entitySecretCiphertext = entitySecretCiphertext!;
+      const response = await walletSetsApi.createWalletSet(req.body);
+      res.header(response.headers).send(response.data);
+    }
   } catch (error) {
     res
       //@ts-ignore
@@ -42,7 +48,7 @@ router.put("/developer/walletSets/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/developer/walletSets", async (req: Request, res: Response) => {
+router.get("/walletSets", async (req: Request, res: Response) => {
   try {
     const response = await walletSetsApi.listWalletSets(
       //@ts-ignore

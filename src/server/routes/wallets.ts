@@ -32,11 +32,13 @@ router.post("/user/wallets", async (req: Request, res: Response) => {
 
 router.post("/developer/wallets", async (req: Request, res: Response) => {
   try {
-    // To Do: Add entitySecretCiphertext generation so it doesn't need to be sent in the body.
-    // This will need to be appended to what is is received.
-    // const entitySecretCiphertext = await CreateEntitySecretCiphertext();
-    const response = await walletsApi.createDeveloperWallet(req.body);
-    res.header(response.headers).send(response.data);
+    const entitySecretCiphertext: string | undefined =
+      await CreateEntitySecretCiphertext();
+    if (typeof entitySecretCiphertext === "string") {
+      req.body.entitySecretCiphertext = entitySecretCiphertext!;
+      const response = await walletsApi.createDeveloperWallet(req.body);
+      res.header(response.headers).send(response.data);
+    }
   } catch (error) {
     res
       //@ts-ignore
