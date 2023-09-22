@@ -4,9 +4,9 @@
 
 Our Test Server, built with Node.js and Typescript using the Express.js framework, offers routing for developers looking to seamlessly connect their client app with Circle's W3S APIs.
 
-> <font size=3>🚧 **Do not use when integrating to Mainnet**</font> 
+> <font size=3>⚠️ **Caution: Not intended for Mainnet integration**</font> 
 > 
-> The W3S test server is currently in Beta and shouldn't be used when integrating to Mainnet.
+> Please note that the W3S test server is specifically designed for testing purposes only. It should not be used for integrating your application with the Mainnet.
 
 ### Setup Steps
 1. Install package dependencies
