@@ -6,7 +6,7 @@ Our Test Server, built with Node.js and Typescript using the Express.js framewor
 
 > <font size=3>⚠️ **Caution: Not intended for Mainnet integration**</font> 
 > 
-> Please note that the W3S test server is specifically designed for testing purposes only. It should not be used for integrating your application with the Mainnet.
+> Please note that the W3S test server is specifically designed for testing purposes only. It should not be used for integrating your application with the Mainnet.  
 
 ### Setup Steps
 1. Install package dependencies
@@ -28,9 +28,9 @@ curl --location 'http://localhost:3000/v1/w3s/wallets'
 ```
 
 ## Why a Test Server?
-The test server was created to get developers up and running with Circle's W3S Programmable Wallets and Smart Contract Platform products as quick as possible. It accomplishes this by reducing the time spent on setting up a server app allowing you to focuse on learning our products provide and what you can build with them. 
+Our objective in creating the test server is to provide developers with a seamless onboarding experience onto Circle's W3S Programmable Wallets and Smart Contract Platform. By minimizing the setup time required for a server app, our aim is to enable you to focus on exploring the potential of our products and discovering the innovative solutions you can build with them.
 
-The test server acts like a proxy, serving as an intermediary between the client application and our APIs. By using the test server, developers can ensure the necessary security measures are in place, including attaching the API key and signing API requests where required.
+The test server functions as a proxy, bridging the gap between the client application and our APIs. By leveraging the test server, developers can rest assured that essential security measures for testing are implemented seamlessly. This includes the attachment of the API key and the proper signing of API requests, ensuring the requested actions are authorized.
 
 The benefits of utilizing the test server are:
 
