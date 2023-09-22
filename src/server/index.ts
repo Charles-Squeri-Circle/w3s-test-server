@@ -39,7 +39,7 @@ app.use("/v1/w3s", createEntitySecretCiphertext);
   }
 
   if (!process.env.API_KEY) {
-    console.log("SETUP ERROR: The API_KEY environment variable doesn't exist. Please it to the .env file: API_KEY=\"<API_KEY>\"\n\nTo acquire an API key go to https://console.circle.com\n");
+    console.log("SETUP ERROR: The API_KEY environment variable doesn't exist. Please add it to the .env file: API_KEY=\"<API_KEY>\"\n\nTo acquire an API key go to https://console.circle.com\n");
     process.exit(1);
   }
 
@@ -61,5 +61,3 @@ app.use("/v1/w3s", createEntitySecretCiphertext);
     console.log(`Server running at http://localhost:${port}`);
   });
 })();
-
-
