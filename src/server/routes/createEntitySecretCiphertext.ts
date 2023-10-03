@@ -1,14 +1,14 @@
 import "dotenv/config";
 import { Router, Request, Response } from "express";
-import { CreateEntitySecretCiphertext } from "../../client/custom/apis/createEntitySecretCiphertext";
-import { CreateEntitySecretCiphertextResponse } from "../models/createEntitySecretCiphertextResponse";
+import { createEntitySecretCiphertext } from "../../client/custom/apis/createEntitySecretCiphertext";
+import { entitySecretCiphertext } from "../models/createEntitySecretCiphertextResponse";
 
 const router = Router();
 
 router.post("/createEntitySecretCiphertext", async (req: Request, res: Response) => {
   try {
-    const entitySecretCipherText = await CreateEntitySecretCiphertext();
-    const createEntitySecretCiphertextResponse: CreateEntitySecretCiphertextResponse = {
+    const entitySecretCipherText = await createEntitySecretCiphertext();
+    const createEntitySecretCiphertextResponse: entitySecretCiphertext = {
       data: {
         registerAt: "https://console.circle.com/wallets/dev/configurator",
         entitySecretCipherText: entitySecretCipherText,

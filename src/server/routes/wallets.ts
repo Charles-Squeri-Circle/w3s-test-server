@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { Router, Request, Response } from "express";
 import { WalletsApi } from "../../client/generated/apis/wallets-api";
-import { CreateEntitySecretCiphertext } from "../../client/custom/apis/createEntitySecretCiphertext";
+import { createEntitySecretCiphertext } from "../../client/custom/apis/createEntitySecretCiphertext";
 
 const router = Router();
 
@@ -15,7 +15,8 @@ router.post("/user/wallets", async (req: Request, res: Response) => {
     const xUserToken: string = req.header("X-User-Token")!;
     try {
       const response = await walletsApi.createUserWallet(xUserToken, req.body);
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     } catch (error) {
       res
         //@ts-ignore
@@ -33,11 +34,12 @@ router.post("/user/wallets", async (req: Request, res: Response) => {
 router.post("/developer/wallets", async (req: Request, res: Response) => {
   try {
     const entitySecretCiphertext: string | undefined =
-      await CreateEntitySecretCiphertext();
+      await createEntitySecretCiphertext();
     if (typeof entitySecretCiphertext === "string") {
       req.body.entitySecretCiphertext = entitySecretCiphertext!;
       const response = await walletsApi.createDeveloperWallet(req.body);
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     }
   } catch (error) {
     res
@@ -65,6 +67,8 @@ router.get("/wallets", async (req: Request, res: Response) => {
       req.query.pageAfter,
       req.query.pageSize
     );
+    
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -84,6 +88,7 @@ router.get("/wallets/:id", async (req: Request, res: Response) => {
       req.params.id,
       req.header("X-User-Token")
     );
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -103,6 +108,7 @@ router.put("/wallets/:id", async (req: Request, res: Response) => {
       req.body,
       req.header("X-User-Token")
     );
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -131,6 +137,10 @@ router.get("/wallets/:id/balances", async (req: Request, res: Response) => {
       req.query.pageAfter,
       req.query.pageSize
     );
+    // Temporary fix Content-Length and transfer-encoding collision. They are supposed to be mutually exclusive.
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Transfer-Encoding#directives
+    // Attempted to use express middle ware response.removeHeader() to fix this issue but it doesn't work for Content-Length
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -159,6 +169,7 @@ router.get("/wallets/:id/nfts", async (req: Request, res: Response) => {
       req.query.pageAfter,
       req.query.pageSize
     );
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res

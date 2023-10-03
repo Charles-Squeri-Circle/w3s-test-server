@@ -12,6 +12,7 @@ const deployImportApi = new DeployImportApi({
 router.post("/contracts/import", async (req: Request, res: Response) => {
   try {
     const response = await deployImportApi.importContact(req.body);
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -27,6 +28,7 @@ router.post("/contracts/import", async (req: Request, res: Response) => {
 router.post("/contracts/deploy", async (req: Request, res: Response) => {
   try {
     const response = await deployImportApi.deployContract(req.body);
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -44,7 +46,8 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const response = await deployImportApi.estimateContractDeploy(req.body);
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     } catch (error) {
       res
         //@ts-ignore

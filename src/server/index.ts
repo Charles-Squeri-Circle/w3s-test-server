@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import fs from "fs";
 import developerAccount from "./routes/developerAccount";
 import userAndPins from "./routes/usersAndPins";
@@ -11,12 +12,14 @@ import interactContracts from "./routes/interactContracts";
 import viewUpdateContracts from "./routes/viewUpdateContracts";
 import createUserTokenChallengeId from "./routes/createUserTokenChallengeId";
 import createEntitySecretCiphertext from "./routes/createEntitySecretCiphertext";
-import { CreateEntitySecretCiphertext } from "../client/custom/apis/createEntitySecretCiphertext";
+import { createEntitySecretCiphertext as initEntitySecretCiphertext  } from "../client/custom/apis/createEntitySecretCiphertext";
 
-const app = express();
+
 const port = process.env.PORT || 3000;
 
-app.use(express.json());
+const app = express();
+app.use(cors()); 
+app.disable('x-powered-by');
 app.use("/v1/w3s/config/entity", developerAccount);
 app.use("/v1/w3s", userAndPins);
 app.use("/v1/w3s", wallets);
@@ -28,6 +31,7 @@ app.use("/v1/w3s", interactContracts);
 app.use("/v1/w3s", viewUpdateContracts);
 app.use("/v1/w3s", createUserTokenChallengeId);
 app.use("/v1/w3s", createEntitySecretCiphertext);
+app.use(express.json());
 
 // Starts express server, checks setup, and initializes entity secret.
 (async () => {
@@ -46,7 +50,7 @@ app.use("/v1/w3s", createEntitySecretCiphertext);
   if (!process.env.ENTITY_SECRET) {
     try {
       const entitySecretCiphertext: string | undefined =
-        await CreateEntitySecretCiphertext();
+        await initEntitySecretCiphertext();
       console.log(
         "If you intend to use developer-controlled wallets, register the following 684 character entity secret ciphertext on: https://console.circle.com/wallets/dev/configurator \n\n" +
           entitySecretCiphertext +

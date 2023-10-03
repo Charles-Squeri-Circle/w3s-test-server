@@ -14,6 +14,7 @@ router.post("/users", async (req: Request, res: Response) => {
     const response = await usersAndPinsApi.createUser({
       userId: req.body.userId,
     });
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -38,6 +39,7 @@ router.get("/users", async (req: Request, res: Response) => {
       req.query.pageAfter,
       req.query.pageSize
     );
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -53,6 +55,7 @@ router.get("/users", async (req: Request, res: Response) => {
 router.get("/users/:id", async (req: Request, res: Response) => {
   try {
     const response = await usersAndPinsApi.getUser(req.params.id);
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -68,6 +71,7 @@ router.get("/users/:id", async (req: Request, res: Response) => {
 router.get("/users/token", async (req: Request, res: Response) => {
   try {
     const response = await usersAndPinsApi.getUserToken(req.body.userId);
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -85,7 +89,8 @@ router.get("/user", async (req: Request, res: Response) => {
     const xUserToken: string = req.header("X-User-Token")!;
     try {
       const response = await usersAndPinsApi.getUserByToken(xUserToken);
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     } catch (error) {
       res
         //@ts-ignore
@@ -108,7 +113,8 @@ router.post("/user/initialize", async (req: Request, res: Response) => {
         xUserToken,
         req.body
       );
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     } catch (error) {
       res
         //@ts-ignore
@@ -128,7 +134,8 @@ router.get("/user/challenges", async (req: Request, res: Response) => {
     const xUserToken: string = req.header("X-User-Token")!;
     try {
       const response = await usersAndPinsApi.listUserChallenges(xUserToken);
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     } catch (error) {
       res
         //@ts-ignore
@@ -151,7 +158,8 @@ router.get("/user/challenges/:id", async (req: Request, res: Response) => {
         xUserToken,
         req.params.id
       );
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     } catch (error) {
       res
         //@ts-ignore
@@ -174,7 +182,8 @@ router.post("/user/pin", async (req: Request, res: Response) => {
         xUserToken,
         req.body
       );
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     } catch (error) {
       res
         //@ts-ignore
@@ -197,7 +206,8 @@ router.put("/user/pin", async (req: Request, res: Response) => {
         xUserToken,
         req.body
       );
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     } catch (error) {
       res
         //@ts-ignore
@@ -220,7 +230,8 @@ router.post("/user/pin/restore", async (req: Request, res: Response) => {
         xUserToken,
         req.body
       );
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     } catch (error) {
       res
         //@ts-ignore

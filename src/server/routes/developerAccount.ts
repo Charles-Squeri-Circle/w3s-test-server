@@ -12,6 +12,7 @@ const developerAccountApi = new DeveloperAccountApi({
 router.get("/", async (req: Request, res: Response) => {
   try {
     const response = await developerAccountApi.getEntityConfig();
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -27,6 +28,7 @@ router.get("/", async (req: Request, res: Response) => {
 router.get("/publicKey", async (req: Request, res: Response) => {
   try {
     const response = await developerAccountApi.getPublicKey();
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res

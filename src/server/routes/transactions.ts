@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { Router, Request, Response } from "express";
 import { TransactionsApi } from "../../client/generated/apis/transactions-api";
-import { CreateEntitySecretCiphertext } from "../../client/custom/apis/createEntitySecretCiphertext";
+import { createEntitySecretCiphertext } from "../../client/custom/apis/createEntitySecretCiphertext";
 
 const router = Router();
 
@@ -21,7 +21,8 @@ router.post(
             xUserToken,
             req.body
           );
-        res.header(response.headers).send(response.data);
+        delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
       } catch (error) {
         res
           //@ts-ignore
@@ -50,7 +51,8 @@ router.post(
             xUserToken,
             req.body
           );
-        res.header(response.headers).send(response.data);
+        delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
       } catch (error) {
         res
           //@ts-ignore
@@ -78,7 +80,8 @@ router.post(
             xUserToken,
             req.body
           );
-        res.header(response.headers).send(response.data);
+        delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
       } catch (error) {
         res
           //@ts-ignore
@@ -105,7 +108,8 @@ router.post(
             xUserToken,
             req.body
           );
-        res.header(response.headers).send(response.data);
+        delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
       } catch (error) {
         res
           //@ts-ignore
@@ -126,12 +130,13 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const entitySecretCiphertext: string | undefined =
-        await CreateEntitySecretCiphertext();
+        await createEntitySecretCiphertext();
       if (typeof entitySecretCiphertext === "string") {
         req.body.entitySecretCiphertext = entitySecretCiphertext!;
         const response =
           await transactionsApi.createDeveloperTransactionTransfer(req.body);
-        res.header(response.headers).send(response.data);
+        delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
       }
     } catch (error) {
       res
@@ -151,7 +156,7 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const entitySecretCiphertext: string | undefined =
-        await CreateEntitySecretCiphertext();
+        await createEntitySecretCiphertext();
       if (typeof entitySecretCiphertext === "string") {
         req.body.entitySecretCiphertext = entitySecretCiphertext!;
         const response =
@@ -159,7 +164,8 @@ router.post(
             req.params.id,
             req.body
           );
-        res.header(response.headers).send(response.data);
+        delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
       }
     } catch (error) {
       res
@@ -178,14 +184,15 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const entitySecretCiphertext: string | undefined =
-        await CreateEntitySecretCiphertext();
+        await createEntitySecretCiphertext();
       if (typeof entitySecretCiphertext === "string") {
         req.body.entitySecretCiphertext = entitySecretCiphertext!;
         const response = await transactionsApi.createDeveloperTransactionCancel(
           req.params.id,
           req.body
         );
-        res.header(response.headers).send(response.data);
+        delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
       }
     } catch (error) {
       res
@@ -204,14 +211,15 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const entitySecretCiphertext: string | undefined =
-        await CreateEntitySecretCiphertext();
+        await createEntitySecretCiphertext();
       if (typeof entitySecretCiphertext === "string") {
         req.body.entitySecretCiphertext = entitySecretCiphertext!;
         const response =
           await transactionsApi.createDeveloperTransactionContractExecution(
             req.body
           );
-        res.header(response.headers).send(response.data);
+        delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
       }
     } catch (error) {
       res
@@ -247,6 +255,7 @@ router.get("/transactions", async (req: Request, res: Response) => {
       req.query.pageAfter,
       req.query.pageSize
     );
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -267,6 +276,7 @@ router.get("/transactions/:id", async (req: Request, res: Response) => {
       //@ts-ignore
       req.query.txType
     );
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -286,7 +296,8 @@ router.post(
       const response = await transactionsApi.createTransferEstimateFee(
         req.body
       );
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     } catch (error) {
       res
         //@ts-ignore
@@ -306,7 +317,8 @@ router.post(
       const response = await transactionsApi.createTransactionEstimateFee(
         req.body
       );
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     } catch (error) {
       res
         //@ts-ignore
@@ -326,7 +338,8 @@ router.post(
       const response = await transactionsApi.createTransactionEstimateFee(
         req.body
       );
-      res.header(response.headers).send(response.data);
+      delete response.headers['transfer-encoding'];
+    res.header(response.headers).send(response.data);
     } catch (error) {
       res
         //@ts-ignore

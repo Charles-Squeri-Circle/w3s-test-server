@@ -12,6 +12,7 @@ const tokenLookupApi = new TokenLookupApi({
 router.get("/tokens/:id", async (req: Request, res: Response) => {
   try {
     const response = await tokenLookupApi.getTokenId(req.params.id);
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res

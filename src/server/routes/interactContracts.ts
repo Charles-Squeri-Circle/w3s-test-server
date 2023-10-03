@@ -12,6 +12,7 @@ const interactApi = new InteractApi({
 router.post("/contracts/:id/read", async (req: Request, res: Response) => {
   try {
     const response = await interactApi.readContract(req.params.id, req.body);
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res

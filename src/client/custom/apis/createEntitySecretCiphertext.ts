@@ -32,7 +32,7 @@ async function getPublicKey() {
   }
 }
 
-export async function CreateEntitySecretCiphertext() {
+export async function createEntitySecretCiphertext() {
   const secret = await entitySecretCheck()!;
   const apiPublicKey = await getPublicKey();
   if (typeof apiPublicKey === "string") {

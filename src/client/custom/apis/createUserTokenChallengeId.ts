@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DeveloperAccountApi } from "../../generated/apis/developer-account-api";
 import { UsersAndPinsApi } from "../../generated/apis/users-and-pins-api";
 import { WalletsApi } from "../../generated/apis/wallets-api";
-import { CreateUserTokenChallengeId } from "../models/CreateUserTokenChallengeId";
+import { userTokenChallengeId } from "../models/userTokenChallengeId";
 
 const developerAccountApi = new DeveloperAccountApi({
   accessToken: process.env.API_KEY,
@@ -18,7 +18,7 @@ const walletsApi = new WalletsApi({
   isJsonMime: (mime: string) => mime.includes("json"),
 });
 
-export async function CreateUserTokenChallengeId() {
+export async function createUserTokenChallengeId() {
   try {
     const getAppIdResponseData = await getAppId();
 
@@ -34,7 +34,7 @@ export async function CreateUserTokenChallengeId() {
       );
     }
 
-    const createUserTokenChallengeId: CreateUserTokenChallengeId = {
+    const createUserTokenChallengeId: userTokenChallengeId = {
       data: {
         appId: getAppIdResponseData?.data?.appId,
         userToken: createUserTokenResponseData?.data?.userToken,

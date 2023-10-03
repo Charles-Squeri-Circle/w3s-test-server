@@ -24,6 +24,7 @@ router.get("/contracts/", async (req: Request, res: Response) => {
       req.query.pageAfter,
       req.query.pageSize
     );
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -39,6 +40,7 @@ router.get("/contracts/", async (req: Request, res: Response) => {
 router.get("/contracts/:id", async (req: Request, res: Response) => {
   try {
     const response = await viewUpdateApi.getContract(req.params.id);
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
@@ -57,6 +59,7 @@ router.patch("/contracts/:id", async (req: Request, res: Response) => {
       req.params.id,
       req.body
     );
+    delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {
     res
