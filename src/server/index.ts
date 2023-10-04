@@ -18,8 +18,8 @@ import { createEntitySecretCiphertext as initEntitySecretCiphertext  } from "../
 const port = process.env.PORT || 3000;
 
 const app = express();
+app.use(express.json());
 app.use(cors()); 
-app.disable('x-powered-by');
 app.use("/v1/w3s/config/entity", developerAccount);
 app.use("/v1/w3s", userAndPins);
 app.use("/v1/w3s", wallets);
@@ -31,7 +31,6 @@ app.use("/v1/w3s", interactContracts);
 app.use("/v1/w3s", viewUpdateContracts);
 app.use("/v1/w3s", createUserTokenChallengeId);
 app.use("/v1/w3s", createEntitySecretCiphertext);
-app.use(express.json());
 
 // Starts express server, checks setup, and initializes entity secret.
 (async () => {
