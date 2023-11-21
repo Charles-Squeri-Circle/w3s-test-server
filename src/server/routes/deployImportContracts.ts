@@ -11,7 +11,7 @@ const deployImportApi = new DeployImportApi({
 
 router.post("/contracts/import", async (req: Request, res: Response) => {
   try {
-    const response = await deployImportApi.importContact(req.body);
+    const response = await deployImportApi.importContract(req.body);
     delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {

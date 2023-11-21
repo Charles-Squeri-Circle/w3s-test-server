@@ -15,10 +15,13 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Blockchain } from './blockchain';
+import { AccountType } from './account-type';
 // May contain unused imports in some cases
 // @ts-ignore
 import { CustodyType } from './custody-type';
+// May contain unused imports in some cases
+// @ts-ignore
+import { SchemasBlockchain } from './schemas-blockchain';
 // May contain unused imports in some cases
 // @ts-ignore
 import { WalletState } from './wallet-state';
@@ -30,11 +33,11 @@ import { WalletState } from './wallet-state';
  */
 export interface WalletResponse {
     /**
-     * 
+     * Unique system generated identifier of the resource.
      * @type {string}
      * @memberof WalletResponse
      */
-    'accountType'?: WalletResponseAccountTypeEnum;
+    'id': string;
     /**
      * The blockchain address generated upon wallet creation.
      * @type {string}
@@ -43,10 +46,10 @@ export interface WalletResponse {
     'address': string;
     /**
      * 
-     * @type {Blockchain}
+     * @type {SchemasBlockchain}
      * @memberof WalletResponse
      */
-    'blockchain': Blockchain;
+    'blockchain': SchemasBlockchain;
     /**
      * Date and time the resource was created. ISO-8601 UTC date/time.
      * @type {string}
@@ -60,11 +63,11 @@ export interface WalletResponse {
      */
     'custodyType': CustodyType;
     /**
-     * Unique system generated identifier of the resource.
-     * @type {string}
+     * 
+     * @type {AccountType}
      * @memberof WalletResponse
      */
-    'id': string;
+    'accountType'?: AccountType;
     /**
      * Name or description associated with the wallet.
      * @type {string}
@@ -103,10 +106,5 @@ export interface WalletResponse {
     'walletSetId': string;
 }
 
-export const WalletResponseAccountTypeEnum = {
-    Eoa: 'EOA'
-} as const;
-
-export type WalletResponseAccountTypeEnum = typeof WalletResponseAccountTypeEnum[keyof typeof WalletResponseAccountTypeEnum];
 
 

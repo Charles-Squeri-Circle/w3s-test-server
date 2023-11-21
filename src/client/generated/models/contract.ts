@@ -15,9 +15,6 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Blockchain } from './blockchain';
-// May contain unused imports in some cases
-// @ts-ignore
 import { ModelContractInputType } from './model-contract-input-type';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -34,6 +31,9 @@ import { ModelStatus } from './model-status';
 // May contain unused imports in some cases
 // @ts-ignore
 import { ModelVerificationStatus } from './model-verification-status';
+// May contain unused imports in some cases
+// @ts-ignore
+import { SchemasBlockchain } from './schemas-blockchain';
 
 /**
  * 
@@ -85,10 +85,10 @@ export interface Contract {
     'archived'?: boolean;
     /**
      * 
-     * @type {Blockchain}
+     * @type {SchemasBlockchain}
      * @memberof Contract
      */
-    'blockchain'?: Blockchain;
+    'blockchain'?: SchemasBlockchain;
     /**
      * Bytecode of the contract being deployed
      * @type {string}

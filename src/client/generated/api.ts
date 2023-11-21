@@ -18,6 +18,8 @@ export * from './apis/deploy-import-api';
 export * from './apis/developer-account-api';
 export * from './apis/interact-api';
 export * from './apis/monitor-tokens-api';
+export * from './apis/signing-api';
+export * from './apis/templates-api';
 export * from './apis/token-lookup-api';
 export * from './apis/transactions-api';
 export * from './apis/users-and-pins-api';

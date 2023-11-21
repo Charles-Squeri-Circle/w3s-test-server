@@ -14,10 +14,12 @@ tags:
   - name: Wallets
   - name: Transactions
   - name: Token Lookup
+  - name: Signing
   - name: Users and Pins
   - name: Deploy / Import
   - name: Interact
   - name: View / Update
+  - name: Templates
 paths:
   /config/entity/monitoredTokens:
     post:
@@ -76,11 +78,11 @@ paths:
           in: query
           schema:
             type: string
-        - $ref: '#/components/parameters/From'
-        - $ref: '#/components/parameters/To'
-        - $ref: '#/components/parameters/PageBefore'
-        - $ref: '#/components/parameters/PageAfter'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/parameters_From'
+        - $ref: '#/components/parameters/parameters_To'
+        - $ref: '#/components/parameters/parameters_PageBefore'
+        - $ref: '#/components/parameters/parameters_PageAfter'
+        - $ref: '#/components/parameters/parameters_PageSize'
       responses:
         '200':
           content:
@@ -296,11 +298,11 @@ paths:
       description: Retreive a list of all wallet sets.
       operationId: listWalletSets
       parameters:
-        - $ref: '#/components/parameters/From'
-        - $ref: '#/components/parameters/To'
-        - $ref: '#/components/parameters/PageBefore'
-        - $ref: '#/components/parameters/PageAfter'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/parameters_From'
+        - $ref: '#/components/parameters/parameters_To'
+        - $ref: '#/components/parameters/parameters_PageBefore'
+        - $ref: '#/components/parameters/parameters_PageAfter'
+        - $ref: '#/components/parameters/parameters_PageSize'
       responses:
         '200':
           content:
@@ -385,11 +387,11 @@ paths:
         - $ref: '#/components/parameters/Address'
         - $ref: '#/components/parameters/Blockchain'
         - $ref: '#/components/parameters/WalletSetIdQuery'
-        - $ref: '#/components/parameters/From'
-        - $ref: '#/components/parameters/To'
-        - $ref: '#/components/parameters/PageBefore'
-        - $ref: '#/components/parameters/PageAfter'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/parameters_From'
+        - $ref: '#/components/parameters/parameters_To'
+        - $ref: '#/components/parameters/parameters_PageBefore'
+        - $ref: '#/components/parameters/parameters_PageAfter'
+        - $ref: '#/components/parameters/parameters_PageSize'
       responses:
         '200':
           content:
@@ -496,11 +498,11 @@ paths:
         - $ref: '#/components/parameters/Name'
         - $ref: '#/components/parameters/TokenAddress'
         - $ref: '#/components/parameters/Standard'
-        - $ref: '#/components/parameters/From'
-        - $ref: '#/components/parameters/To'
-        - $ref: '#/components/parameters/PageBefore'
-        - $ref: '#/components/parameters/PageAfter'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/parameters_From'
+        - $ref: '#/components/parameters/parameters_To'
+        - $ref: '#/components/parameters/parameters_PageBefore'
+        - $ref: '#/components/parameters/parameters_PageAfter'
+        - $ref: '#/components/parameters/parameters_PageSize'
       responses:
         '200':
           content:
@@ -535,11 +537,11 @@ paths:
         - $ref: '#/components/parameters/Name'
         - $ref: '#/components/parameters/TokenAddress'
         - $ref: '#/components/parameters/Standard'
-        - $ref: '#/components/parameters/From'
-        - $ref: '#/components/parameters/To'
-        - $ref: '#/components/parameters/PageBefore'
-        - $ref: '#/components/parameters/PageAfter'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/parameters_From'
+        - $ref: '#/components/parameters/parameters_To'
+        - $ref: '#/components/parameters/parameters_PageBefore'
+        - $ref: '#/components/parameters/parameters_PageAfter'
+        - $ref: '#/components/parameters/parameters_PageSize'
       responses:
         '200':
           content:
@@ -703,11 +705,11 @@ paths:
         - $ref: '#/components/parameters/TxHash'
         - $ref: '#/components/parameters/TxType'
         - $ref: '#/components/parameters/WalletIds'
-        - $ref: '#/components/parameters/From'
-        - $ref: '#/components/parameters/To'
-        - $ref: '#/components/parameters/PageBefore'
-        - $ref: '#/components/parameters/PageAfter'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/parameters_From'
+        - $ref: '#/components/parameters/parameters_To'
+        - $ref: '#/components/parameters/parameters_PageBefore'
+        - $ref: '#/components/parameters/parameters_PageAfter'
+        - $ref: '#/components/parameters/parameters_PageSize'
       responses:
         '200':
           content:
@@ -845,6 +847,64 @@ paths:
               $ref: '#/components/headers/XRequestId'
         default:
           $ref: '#/components/responses/Default'
+  /developer/sign/message:
+    post:
+      tags:
+        - Signing
+      summary: Sign message
+      description: 'Sign the EIP-191 message from a specified developer-controlled wallet. Please note that not all the Dapps currently support Smart Contract Account (SCA), the difference between EOA and SCA can be found in the [account types guide](https://developers.circle.com/w3s/docs/programmable-wallets-account-types), and you can check the list of Dapps that support SCA: https://eip1271.io/.'
+      operationId: signDeveloperMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignMessageForDeveloperRequest'
+        description: Sign message for developer request
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SignMessageForDeveloperResponse'
+          description: OK
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/XRequestId'
+        default:
+          $ref: '#/components/responses/Default'
+  /developer/sign/typedData:
+    post:
+      tags:
+        - Signing
+      summary: Sign typed data
+      description: 'Sign the EIP-712 typed structured data from a specified developer-controlled wallet. Please note that not all the Dapps currently support Smart Contract Account (SCA), the difference between EOA and SCA can be found in the [account types guide](https://developers.circle.com/w3s/docs/programmable-wallets-account-types), and you can check the list of Dapps that support SCA: https://eip1271.io/.'
+      operationId: signDeveloperTypedData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignTypedDataForDeveloperRequest'
+        description: Sign message for developer request
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SignTypedDataForDeveloperResponse'
+          description: OK
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/XRequestId'
+        default:
+          $ref: '#/components/responses/Default'
   /tokens/{id}:
     get:
       tags:
@@ -910,11 +970,11 @@ paths:
       parameters:
         - $ref: '#/components/parameters/PinStatus'
         - $ref: '#/components/parameters/SecurityQuestionStatus'
-        - $ref: '#/components/parameters/From'
-        - $ref: '#/components/parameters/To'
-        - $ref: '#/components/parameters/PageBefore'
-        - $ref: '#/components/parameters/PageAfter'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/parameters_From'
+        - $ref: '#/components/parameters/parameters_To'
+        - $ref: '#/components/parameters/parameters_PageBefore'
+        - $ref: '#/components/parameters/parameters_PageAfter'
+        - $ref: '#/components/parameters/parameters_PageSize'
       responses:
         '200':
           content:
@@ -1363,18 +1423,98 @@ paths:
               $ref: '#/components/headers/XRequestId'
         default:
           $ref: '#/components/responses/Default'
+  /user/sign/message:
+    post:
+      tags:
+        - Signing
+      summary: Create a challenge to sign message
+      description: 'Generates a challenge for signing the EIP-191 message from a specified user-controlled wallet. Please note that not all the Dapps currently support Smart Contract Account (SCA), the difference between EOA and SCA can be found in the [account types guide](https://developers.circle.com/w3s/docs/programmable-wallets-account-types), and you can check the list of Dapps that support SCA: https://eip1271.io/.'
+      operationId: signUserMessage
+      parameters:
+        - $ref: '#/components/parameters/XUserTokenRequired'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignMessageForEndUserRequest'
+        description: Sign message for end user request
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SignMessageForEndUserResponse'
+          description: Signature already exists
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/XRequestId'
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignMessageForEndUserResponse'
+          description: Signature created
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/XRequestId'
+        default:
+          $ref: '#/components/responses/Default'
+  /user/sign/typedData:
+    post:
+      tags:
+        - Signing
+      summary: Create a challenge to sign typed data
+      description: 'Generates a challenge for signing the EIP-712 typed structured data from a specified user-controlled wallet. Please note that not all the Dapps currently support Smart Contract Account (SCA), the difference between EOA and SCA can be found in the [account types guide](https://developers.circle.com/w3s/docs/programmable-wallets-account-types), and you can check the list of Dapps that support SCA: https://eip1271.io/.'
+      operationId: signUserTypedData
+      parameters:
+        - $ref: '#/components/parameters/XUserTokenRequired'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignTypedDataForEndUserRequest'
+        description: Sign typed data for end user request
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SignTypedDataForEndUserResponse'
+          description: Signature already exists
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/XRequestId'
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignTypedDataForEndUserResponse'
+          description: Signature created
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/XRequestId'
+        default:
+          $ref: '#/components/responses/Default'
   /contracts/import:
     post:
       tags:
         - Deploy / Import
       summary: Import a contract
-      description: Import contract
-      operationId: importContact
+      description: Add an existing smart contract to your library of contracts. It also can be done in the Web3 Services Console.
+      operationId: importContract
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ImportContractRequest'
+              $ref: '#/components/schemas/scp-schemas_ImportContractRequest'
         description: Import contract request
         required: true
       responses:
@@ -1384,7 +1524,7 @@ paths:
               schema:
                 properties:
                   data:
-                    $ref: '#/components/schemas/ContractResponse'
+                    $ref: '#/components/schemas/scp-schemas_ContractResponse'
           description: Idempotent request. Contract already imported
           headers:
             X-Request-Id:
@@ -1395,7 +1535,7 @@ paths:
               schema:
                 properties:
                   data:
-                    $ref: '#/components/schemas/ContractResponse'
+                    $ref: '#/components/schemas/scp-schemas_ContractResponse'
           description: Contract imported
           headers:
             X-Request-Id:
@@ -1414,13 +1554,13 @@ paths:
       tags:
         - Deploy / Import
       summary: Deploy a contract
-      description: Deploy a smart contract
+      description: Deploy a smart contract on a specified blockchain using the contract's ABI and bytecode. The deployment will originate from one of your Circle Programmable Wallets.
       operationId: deployContract
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ContractDeploymentRequest'
+              $ref: '#/components/schemas/scp-schemas_ContractDeploymentRequest'
             examples:
               Wallet ID:
                 value:
@@ -1444,7 +1584,7 @@ paths:
               schema:
                 properties:
                   data:
-                    $ref: '#/components/schemas/ContractDeploymentResponse'
+                    $ref: '#/components/schemas/scp-schemas_ContractDeploymentResponse'
           description: Idempotent request. Contract deployment request already submitted
           headers:
             X-Request-Id:
@@ -1455,7 +1595,7 @@ paths:
               schema:
                 properties:
                   data:
-                    $ref: '#/components/schemas/ContractDeploymentResponse'
+                    $ref: '#/components/schemas/scp-schemas_ContractDeploymentResponse'
           description: 'New contract deployed '
           headers:
             X-Request-Id:
@@ -1474,13 +1614,13 @@ paths:
       tags:
         - Deploy / Import
       summary: Estimate a contract deployment
-      description: Estimate the transaction fee for deploying a smart contract
+      description: Estimate the network fee for deploying a smart contract on a specified blockchain, given the contract bytecode.
       operationId: estimateContractDeploy
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ContractDeploymentEstimateFeeRequest'
+              $ref: '#/components/schemas/scp-schemas_ContractDeploymentEstimateFeeRequest'
             examples:
               Wallet ID:
                 value:
@@ -1508,7 +1648,7 @@ paths:
               schema:
                 properties:
                   data:
-                    $ref: '#/components/schemas/ContractDeploymentEstimateFeeResponse'
+                    $ref: '#/components/schemas/scp-schemas_ContractDeploymentEstimateFeeResponse'
           description: OK
           headers:
             X-Request-Id:
@@ -1526,8 +1666,8 @@ paths:
     post:
       tags:
         - Interact
-      summary: Execute a read function on a contract.
-      description: Read contract state by ABI
+      summary: Execute a read function on a contract
+      description: Read the state of a contract you've imported or deployed by providing the ABI function and applicable parameters.
       operationId: readContract
       parameters:
         - description: Contract id
@@ -1540,8 +1680,8 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReadContractStateRequest'
-        description: Read contract state by ABI request
+              $ref: '#/components/schemas/scp-schemas_ReadContractStateRequest'
+        description: Read contract state by executing a read ABI function.
         required: true
       responses:
         '200':
@@ -1550,7 +1690,7 @@ paths:
               schema:
                 properties:
                   data:
-                    $ref: '#/components/schemas/ReadContractStateResponse'
+                    $ref: '#/components/schemas/scp-schemas_ReadContractStateResponse'
           description: OK
           headers:
             X-Request-Id:
@@ -1569,23 +1709,21 @@ paths:
       tags:
         - View / Update
       summary: List contracts
-      description: List all contracts
+      description: Fetch a list of contracts that you've imported and/or deployed.
       operationId: listContracts
       parameters:
         - name: blockchain
-          description: Blockchain is the blockchain filter for contracts
+          description: Filter by blockchain.
           in: query
           schema:
             type: string
             enum:
               - ETH
               - ETH-GOERLI
-              - AVAX
-              - AVAX-FUJI
               - MATIC
               - MATIC-MUMBAI
         - name: contractInputType
-          description: ContractInputType is the input type filter for contracts
+          description: Filter contracts by input type.
           in: query
           schema:
             type: string
@@ -1593,17 +1731,17 @@ paths:
               - IMPORT
               - BYTECODE
         - name: deployerAddress
-          description: DeployerAddress is the deployer wallet address filter for contracts
+          description: Filter contracts by deployer address.
           in: query
           schema:
             type: string
         - name: name
-          description: Name is the name filter for contracts
+          description: Filter contracts by name.
           in: query
           schema:
             type: string
         - name: status
-          description: Status is the status filter for contracts
+          description: Filter contracts by status.
           in: query
           schema:
             type: string
@@ -1611,11 +1749,11 @@ paths:
               - PENDING
               - FAILED
               - COMPLETE
-        - $ref: '#/components/parameters/From'
-        - $ref: '#/components/parameters/To'
-        - $ref: '#/components/parameters/PageBefore'
-        - $ref: '#/components/parameters/PageAfter'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/parameters_From'
+        - $ref: '#/components/parameters/parameters_To'
+        - $ref: '#/components/parameters/parameters_PageBefore'
+        - $ref: '#/components/parameters/parameters_PageAfter'
+        - $ref: '#/components/parameters/parameters_PageSize'
       responses:
         '200':
           content:
@@ -1623,7 +1761,7 @@ paths:
               schema:
                 properties:
                   data:
-                    $ref: '#/components/schemas/ContractsResponse'
+                    $ref: '#/components/schemas/scp-schemas_ContractsResponse'
           description: Contract list retrieved
           headers:
             X-Request-Id:
@@ -1646,7 +1784,7 @@ paths:
       tags:
         - View / Update
       summary: Get a contract
-      description: Get a contract by id. This does not support getting a contract by address.
+      description: Get a single contract that you've imported or deployed. Retrieved using the contracts ID as opposed to the on-chain address.
       operationId: getContract
       parameters:
         - description: Contract id
@@ -1662,7 +1800,7 @@ paths:
               schema:
                 properties:
                   data:
-                    $ref: '#/components/schemas/ContractResponse'
+                    $ref: '#/components/schemas/scp-schemas_ContractResponse'
           description: Contract retrieved
           headers:
             X-Request-Id:
@@ -1680,7 +1818,7 @@ paths:
       tags:
         - View / Update
       summary: Update a contract
-      description: Update off-chain contract properties
+      description: Update the off-chain properties, such as description, of a contract that you've imported or deployed. Updated using the contracts ID as opposed to the on-chain address.
       operationId: updateContract
       parameters:
         - description: Contract id
@@ -1693,7 +1831,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchContractRequest'
+              $ref: '#/components/schemas/scp-schemas_PatchContractRequest'
         description: Update contract properties request
         required: true
       responses:
@@ -1703,8 +1841,97 @@ paths:
               schema:
                 properties:
                   data:
-                    $ref: '#/components/schemas/ContractResponse'
+                    $ref: '#/components/schemas/scp-schemas_ContractResponse'
           description: OK
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/XRequestId'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/XRequestId'
+  /templates/{id}/deploy:
+    post:
+      tags:
+        - Templates
+      summary: Deploy a contract from a template
+      description: Deploy a smart contract using a template.
+      operationId: deployContractTemplate
+      parameters:
+        - description: Template id
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateContractDeploymentRequest'
+        description: Deploy contract by template request
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateContractDeploymentResponse'
+          description: Contract already created in previous request
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/XRequestId'
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateContractDeploymentResponse'
+          description: New contract deployed
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/XRequestId'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/XRequestId'
+  /templates/{id}/deploy/estimateFee:
+    post:
+      tags:
+        - Templates
+      summary: Estimate fee for a contract template deployment
+      description: Estimate the fee required to deploy contract by template.
+      operationId: estimateContractTemplateDeploy
+      parameters:
+        - description: Template id
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EstimateDeployContractByTemplateFeeRequest'
+        description: Request object for estimating the transaction fees for deploying a contract from a template.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimateDeployContractByTemplateFeeResponse'
+          description: Response object with estimated transaction fee values.
           headers:
             X-Request-Id:
               $ref: '#/components/headers/XRequestId'
@@ -1832,7 +2059,7 @@ components:
         archived:
           $ref: '#/components/schemas/Archived'
         blockchain:
-          $ref: '#/components/schemas/Blockchain'
+          $ref: '#/components/schemas/schemas_Blockchain'
         bytecode:
           $ref: '#/components/schemas/Bytecode'
         contractAddress:
@@ -2200,12 +2427,24 @@ components:
       type: string
       format: uuid
       description: Unique system generated identifier of the resource.
+      example: c4d1da72-111e-4d52-bdbf-2e74a2d803d5
     TokenStandard:
       type: string
       enum:
         - ERC20
         - ERC721
         - ERC1155
+    schemas_Blockchain:
+      type: string
+      description: The blockchain network the resource will be created on or is currently on.
+      enum:
+        - ETH-GOERLI
+        - ETH
+        - AVAX-FUJI
+        - AVAX
+        - MATIC-MUMBAI
+        - MATIC
+      example: MATIC-MUMBAI
     schemas_CreateDate:
       type: string
       format: date-time
@@ -2228,7 +2467,7 @@ components:
         standard:
           $ref: '#/components/schemas/TokenStandard'
         blockchain:
-          $ref: '#/components/schemas/Blockchain'
+          $ref: '#/components/schemas/schemas_Blockchain'
         decimals:
           type: integer
           description: Number of decimal places shown in the token amount.
@@ -2422,6 +2661,15 @@ components:
       properties:
         walletSet:
           $ref: '#/components/schemas/WalletSetResponse'
+    AccountType:
+      type: string
+      description: |
+        An Account can be a Smart Contract Account (SCA) or an Externally Owned Account (EOA). To learn more about account types and the differences between the two, see the [account types guide](https://developers.circle.com/w3s/docs/programmable-wallets-account-types).
+
+        If an account type is not specified during the creation of a wallet, it will default to `EOA` (Externally Owned Account).
+      enum:
+        - SCA
+        - EOA
     TransactionReferenceId:
       type: string
       example: grouptransaction123
@@ -2449,10 +2697,12 @@ components:
       properties:
         idempotencyKey:
           $ref: '#/components/schemas/schemas_IdempotencyKey'
+        accountType:
+          $ref: '#/components/schemas/AccountType'
         blockchains:
           type: array
           items:
-            $ref: '#/components/schemas/Blockchain'
+            $ref: '#/components/schemas/schemas_Blockchain'
           description: Blockchain(s) the requested wallets will be created on.
         count:
           type: integer
@@ -2494,20 +2744,18 @@ components:
         - createDate
         - updateDate
       properties:
-        accountType:
-          type: string
-          enum:
-            - EOA
+        id:
+          $ref: '#/components/schemas/schemas_Id'
         address:
           $ref: '#/components/schemas/BlockchainAddress'
         blockchain:
-          $ref: '#/components/schemas/Blockchain'
+          $ref: '#/components/schemas/schemas_Blockchain'
         createDate:
           $ref: '#/components/schemas/schemas_CreateDate'
         custodyType:
           $ref: '#/components/schemas/CustodyType'
-        id:
-          $ref: '#/components/schemas/schemas_Id'
+        accountType:
+          $ref: '#/components/schemas/AccountType'
         name:
           type: string
           description: Name or description associated with the wallet.
@@ -2555,16 +2803,18 @@ components:
         wallet:
           type: object
           properties:
+            id:
+              $ref: '#/components/schemas/schemas_Id'
             address:
               $ref: '#/components/schemas/BlockchainAddress'
             blockchain:
-              $ref: '#/components/schemas/Blockchain'
+              $ref: '#/components/schemas/schemas_Blockchain'
             createDate:
               $ref: '#/components/schemas/schemas_CreateDate'
             custodyType:
               $ref: '#/components/schemas/CustodyType'
-            id:
-              $ref: '#/components/schemas/schemas_Id'
+            accountType:
+              $ref: '#/components/schemas/AccountType'
             name:
               type: string
               description: Name or description associated with the wallet.
@@ -2650,6 +2900,7 @@ components:
         - LOW
         - MEDIUM
         - HIGH
+      example: MEDIUM
       description: |
         A dynamic blockchain fee level setting (`LOW`, `MEDIUM`, or `HIGH`) that will be used to pay gas for the transaction. Calculated based on network traffic, supply of validators, and demand for transaction verification. Cannot be used with `gasLimit`, `gasPrice`, `baseFee`, `priorityFee`, or `maxFee`.
         Estimates for each fee level can be obtained through the Estimate fee API call.
@@ -2666,18 +2917,20 @@ components:
         Estimates for this fee can be obtained through the estimate fee API call.
     MaxFee:
       type: string
+      example: '5.935224468'
       description: |
         The maximum price per unit of gas (see `gasLimit`), in gwei. Requires `baseFee`, `priorityFee`, and `gasLimit` to be present. Cannot be used with `feeLevel` or `gasPrice`.
         Estimates for this fee can be obtained through the estimate fee API call.
     PriorityFee:
       type: string
+      example: '1.022783914'
       description: |
         The “tip”, in gwei, to be added to the baseFee as an incentive for validators. Requires `baseFee`, `maxFee`, and `gasLimit` to be present. Cannot be used with `feeLevel` or `gasPrice`.
         Estimates for this fee can be obtained through the estimate fee API call.
     schemas_WalletId:
       type: string
       format: uuid
-      description: Unique system generated identifier of the wallet. Required when source Address and blockchain is not provided. Mutually exclusive
+      description: Unique system generated identifier of the wallet. Required when source Address and blockchain is not provided. Mutually exclusive. For contract deploys this wallet ID will be used as the source.
       example: a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
     CreateTransferTransactionForDeveloperRequest:
       type: object
@@ -2780,23 +3033,30 @@ components:
           $ref: '#/components/schemas/TransactionState'
     schemas_AbiFunctionSignature:
       type: string
-      description: The contract abi function signature to be interacted with in the smart contract. e.g. burn(uint256)
+      description: "The contract ABI function signature or\_`callData`\_field is required for interacting with the smart contract. The ABI function signature cannot be used simultaneously with\_`callData`. e.g. burn(uint256)"
       example: burn(uint256)
     schemas_AbiParameters:
       type: array
       items:
         type: string
-      description: The parameters required by the contract abi function to perform the contract interaction. Supported types included string, integer, boolean, and array.
+      description: "The contract ABI function signature parameters for executing the contract interaction. Supported parameter types include string, integer, boolean, and array. These parameters should be used exclusively with the abiFunctionSignature and cannot be used with\_`callData`."
       example:
         - '100'
         - '1'
+    CallData:
+      type: string
+      description: "The raw transaction data, must be an even-length hexadecimal string with the\_`0x`\_prefix, to be executed. It is important to note that the usage of\_`callData`\_is mutually exclusive with the\_`abiFunctionSignature`\_and\_`abiParameters`. Therefore,\_`callData`\_cannot be utilized simultaneously with either\_`abiFunctionSignature`\_or\_`abiParameters`."
+      example: '0xcdcd77c000000000000000000000000000000000000000000000000000000000000000450000000000000000000000000000000000000000000000000000000000000001'
+    Amount:
+      type: string
+      description: The amount of native token that will be sent to the contract abi execution. Optional field for payable api only, if not provided, no native token will be sent.
+      example: '1.0'
     ContractAddress:
       description: The blockchain address of the contract to be executed.
       type: string
     CreateContractExecutionTransactionForDeveloperRequest:
       type: object
       required:
-        - abiParameters
         - contractAddress
         - entitySecretCiphertext
         - idempotencyKey
@@ -2808,6 +3068,10 @@ components:
           $ref: '#/components/schemas/schemas_AbiFunctionSignature'
         abiParameters:
           $ref: '#/components/schemas/schemas_AbiParameters'
+        callData:
+          $ref: '#/components/schemas/CallData'
+        amount:
+          $ref: '#/components/schemas/Amount'
         contractAddress:
           $ref: '#/components/schemas/ContractAddress'
         entitySecretCiphertext:
@@ -2839,6 +3103,7 @@ components:
           $ref: '#/components/schemas/TransactionState'
     BaseFee:
       type: string
+      example: '2.456220277'
       description: |
         The base price per unit of gas (see `gasLimit`), in gwei, required to execute the transaction. Determined by the blockchain protocol. Requires `priorityFee`, `maxFee`, and `gasLimit` to be present. Cannot be used with `feeLevel` or `gasPrice`.
         Estimates for this fee can be obtained through the estimate fee API call.  
@@ -2865,6 +3130,7 @@ components:
     schemas_SourceAddress:
       type: string
       description: The source blockchain address of the transaction.
+      example: '0x1bf9ad0cc2ad298c69a2995aa806ee832788218c'
     TokenId:
       type: string
       format: uuid
@@ -2874,6 +3140,10 @@ components:
       enum:
         - INBOUND
         - OUTBOUND
+    TransactionHash:
+      type: string
+      description: Blockchain generated identifier of the transaction.
+      example: '0x4a25cc5e661d8504b59c5f38ba93f010e8518966f00e2ceda7955c4b8621357d'
     Transaction:
       type: object
       required:
@@ -2902,7 +3172,7 @@ components:
           type: integer
           description: Block height of the transaction, representing the number of blockchain confirmations.
         blockchain:
-          $ref: '#/components/schemas/Blockchain'
+          $ref: '#/components/schemas/schemas_Blockchain'
         contractAddress:
           $ref: '#/components/schemas/ContractAddress'
         createDate:
@@ -2960,8 +3230,7 @@ components:
         transactionType:
           $ref: '#/components/schemas/TransactionType'
         txHash:
-          type: string
-          description: Blockchain generated identifier of the transaction.
+          $ref: '#/components/schemas/TransactionHash'
         updateDate:
           $ref: '#/components/schemas/UpdateDate'
         userId:
@@ -3004,6 +3273,18 @@ components:
           $ref: '#/components/schemas/TokenId'
         walletId:
           $ref: '#/components/schemas/schemas_WalletId'
+    CallGasLimit:
+      type: string
+      description: One of ERC-4337 gas fields. The amount of gas to allocate for the main execution call. Only in smart contract account estimation response.
+      example: '69222'
+    VerificationGasLimit:
+      type: string
+      description: One of ERC-4337 gas fields. The amount of gas to allocate for the verification step. Only in smart contract account estimation response.
+      example: '56863'
+    PreVerificationGas:
+      type: string
+      description: One of ERC-4337 gas fields. The amount of gas to pay to compensate the bundler for pre-verification execution and call data. Only in smart contract account estimation response.
+      example: '44112'
     EstimateTransactionFeeResponse:
       type: object
       properties:
@@ -3013,23 +3294,32 @@ components:
           $ref: '#/components/schemas/EstimatedTransactionFee'
         medium:
           $ref: '#/components/schemas/EstimatedTransactionFee'
+        callGasLimit:
+          $ref: '#/components/schemas/CallGasLimit'
+        verificationGasLimit:
+          $ref: '#/components/schemas/VerificationGasLimit'
+        preVerificationGas:
+          $ref: '#/components/schemas/PreVerificationGas'
     EstimateContractExecutionTransactionFeeRequest:
       type: object
       required:
         - abiFunctionSignature
-        - abiParameters
         - contractAddress
       properties:
         abiFunctionSignature:
           $ref: '#/components/schemas/schemas_AbiFunctionSignature'
         abiParameters:
           $ref: '#/components/schemas/schemas_AbiParameters'
+        callData:
+          $ref: '#/components/schemas/CallData'
+        amount:
+          $ref: '#/components/schemas/Amount'
         blockchain:
           description: |
             Blockchain associated with the transaction. Required along with sourceAddress
             if walletId is not provided. The blockchain and walletId fields are mutually exclusive.
           allOf:
-            - $ref: '#/components/schemas/Blockchain'
+            - $ref: '#/components/schemas/schemas_Blockchain'
         contractAddress:
           $ref: '#/components/schemas/ContractAddress'
         sourceAddress:
@@ -3052,7 +3342,7 @@ components:
         address:
           $ref: '#/components/schemas/BlockchainAddress'
         blockchain:
-          $ref: '#/components/schemas/Blockchain'
+          $ref: '#/components/schemas/schemas_Blockchain'
     ValidateAddressResponse:
       type: object
       required:
@@ -3060,6 +3350,72 @@ components:
       properties:
         isValid:
           type: boolean
+    EncodedByHex:
+      type: boolean
+      description: Indicator of whether the input message is encoded by hex. If TRUE, then the message should be a hex string. By default, it is False.
+      example: false
+    Message:
+      type: string
+      description: The user friendly message that needs to be signed. If it is a hex string, encodedByHex needs to be TRUE. The hex string should start with “0x” and have even length.
+      example: I agree with this transfer
+    Memo:
+      type: string
+      description: The human readable explanation for this sign action. Useful for presenting with extra information.
+      example: Transfer USDC to Sam
+    SignMessageForDeveloperRequest:
+      type: object
+      required:
+        - message
+        - walletId
+        - entitySecretCiphertext
+      properties:
+        walletId:
+          $ref: '#/components/schemas/schemas_WalletId'
+        encodedByHex:
+          $ref: '#/components/schemas/EncodedByHex'
+        message:
+          $ref: '#/components/schemas/Message'
+        memo:
+          $ref: '#/components/schemas/Memo'
+        entitySecretCiphertext:
+          $ref: '#/components/schemas/EntitySecretCiphertext'
+    Signature:
+      type: string
+      description: Signature is a hex encoded 65 byte array starting with 0x.
+      example: 0x977c17f82d8b042b67b09d0e61e7d324f050cb000c17a08...
+    SignMessageForDeveloperResponse:
+      type: object
+      required:
+        - signature
+      properties:
+        signature:
+          $ref: '#/components/schemas/Signature'
+    Data:
+      type: string
+      description: A string represents the typed structured data in EIP-712
+      example: '{ "types": { "Data": [{ "name": "dummy", "type": "string" }],}, "domain": { "name": "Test", "chainId": 1337 }, "primaryType": "Data", "message": { "dummy": "dummy" }}'
+    SignTypedDataForDeveloperRequest:
+      type: object
+      required:
+        - data
+        - walletId
+        - entitySecretCiphertext
+      properties:
+        walletId:
+          $ref: '#/components/schemas/schemas_WalletId'
+        data:
+          $ref: '#/components/schemas/Data'
+        memo:
+          $ref: '#/components/schemas/Memo'
+        entitySecretCiphertext:
+          $ref: '#/components/schemas/EntitySecretCiphertext'
+    SignTypedDataForDeveloperResponse:
+      type: object
+      required:
+        - signature
+      properties:
+        signature:
+          $ref: '#/components/schemas/Signature'
     GetTokenByIDResponse:
       type: object
       properties:
@@ -3179,10 +3535,12 @@ components:
       properties:
         idempotencyKey:
           $ref: '#/components/schemas/schemas_IdempotencyKey'
+        accountType:
+          $ref: '#/components/schemas/AccountType'
         blockchains:
           type: array
           items:
-            $ref: '#/components/schemas/Blockchain'
+            $ref: '#/components/schemas/schemas_Blockchain'
           description: Blockchain(s) the requested wallets will be created on.
           example:
             - ETH
@@ -3253,6 +3611,8 @@ components:
             - ACCELERATE_TRANSACTION
             - CANCEL_TRANSACTION
             - CONTRACT_EXECUTION
+            - SIGN_MESSAGE
+            - SIGN_TYPEDDATA
           description: The challenge type
           example: SET_PIN
     GetEndUserChallengesResponse:
@@ -3310,11 +3670,13 @@ components:
       properties:
         idempotencyKey:
           $ref: '#/components/schemas/schemas_IdempotencyKey'
+        accountType:
+          $ref: '#/components/schemas/AccountType'
         blockchains:
           type: array
           description: Blockchain(s) the requested wallets will be created on.
           items:
-            $ref: '#/components/schemas/Blockchain'
+            $ref: '#/components/schemas/schemas_Blockchain'
         metadata:
           type: array
           description: List of metadata fields to associate with the corresponding wallet.
@@ -3403,6 +3765,10 @@ components:
           $ref: '#/components/schemas/schemas_AbiFunctionSignature'
         abiParameters:
           $ref: '#/components/schemas/schemas_AbiParameters'
+        callData:
+          $ref: '#/components/schemas/CallData'
+        amount:
+          $ref: '#/components/schemas/Amount'
         contractAddress:
           $ref: '#/components/schemas/ContractAddress'
         feeLevel:
@@ -3426,6 +3792,443 @@ components:
       properties:
         challengeId:
           $ref: '#/components/schemas/ChallengeId'
+    SignMessageForEndUserRequest:
+      type: object
+      required:
+        - message
+        - walletId
+      properties:
+        walletId:
+          $ref: '#/components/schemas/schemas_WalletId'
+        encodedByHex:
+          $ref: '#/components/schemas/EncodedByHex'
+        message:
+          $ref: '#/components/schemas/Message'
+        memo:
+          $ref: '#/components/schemas/Memo'
+    SignMessageForEndUserResponse:
+      type: object
+      required:
+        - challengeId
+      properties:
+        challengeId:
+          $ref: '#/components/schemas/ChallengeId'
+    SignTypedDataForEndUserRequest:
+      type: object
+      required:
+        - data
+        - walletId
+      properties:
+        walletId:
+          $ref: '#/components/schemas/schemas_WalletId'
+        data:
+          $ref: '#/components/schemas/Data'
+        memo:
+          $ref: '#/components/schemas/Memo'
+    SignTypedDataForEndUserResponse:
+      type: object
+      required:
+        - challengeId
+      properties:
+        challengeId:
+          $ref: '#/components/schemas/ChallengeId'
+    scp-schemas_ContractName:
+      type: string
+      description: The name for a contract.
+      example: First Contract
+    scp-schemas_Blockchain:
+      type: string
+      description: The blockchain network the resource will be created on or is currently on.
+      enum:
+        - ETH-GOERLI
+        - ETH
+        - MATIC-MUMBAI
+        - MATIC
+      example: MATIC-MUMBAI
+    scp-schemas_ImportContractRequest:
+      type: object
+      required:
+        - idempotencyKey
+        - name
+      properties:
+        idempotencyKey:
+          $ref: '#/components/schemas/schemas_IdempotencyKey'
+        name:
+          $ref: '#/components/schemas/scp-schemas_ContractName'
+        description:
+          $ref: '#/components/schemas/ContractDescription'
+        address:
+          type: string
+          description: Address of the contract to import.
+          example: '0x1e124d7384cd34448ea5907bd0052a79355ab5eb'
+        blockchain:
+          $ref: '#/components/schemas/scp-schemas_Blockchain'
+    scp-schemas_Archived:
+      description: The archive state of the contract. If true, the contract will not be visible in your dashboard.
+      type: boolean
+      example: false
+    scp-schemas_Bytecode:
+      type: string
+      description: Bytecode of the contract being deployed.
+      minLength: 1
+      writeOnly: true
+      example: 0x60806040523480156200001157600080fd5b50604051806040...
+    ContractInputType:
+      type: string
+      description: The input type for the contract.
+      enum:
+        - IMPORT
+        - BYTECODE
+        - TEMPLATE
+    ContractStatus:
+      type: string
+      description: The status of the contract.
+      enum:
+        - PENDING
+        - FAILED
+        - COMPLETE
+    VerificationStatus:
+      type: string
+      description: The verification status of the contract.
+      enum:
+        - UNVERIFIED
+        - VERIFIED
+    SolFile:
+      type: object
+      description: Source code of a contract from Etherscan.
+      required:
+        - fileContent
+      properties:
+        fileName:
+          type: string
+          description: Name of the file.
+          example: openzeppelin-solidity/contracts/math/SafeMath.sol
+        fileContent:
+          type: string
+          description: Content of the file. If the contract's source code was flattened before verification, this may be the entire source code.
+          example: |-
+            pragma solidity ^0.4.24;
+
+            /**
+             * @title SafeMath
+             * @dev Math operations with safety checks...
+    ParamType:
+      type: object
+      properties:
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnyValue'
+        indexed:
+          type: boolean
+        name:
+          type: string
+          example: to
+        type:
+          type: string
+          example: address
+    Function:
+      type: object
+      properties:
+        name:
+          type: string
+          example: approve
+        stateMutability:
+          type: string
+          example: nonpayable
+        type:
+          type: string
+          example: function
+        inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParamType'
+        outputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParamType'
+    Event:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Approval
+        type:
+          type: string
+          example: event
+        anonymous:
+          type: boolean
+          example: false
+        inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParamType'
+    scp-schemas_Contract:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/schemas_Id'
+        deployerWalletID:
+          type: string
+          format: uuid
+          description: The `id` of the Programmable Wallet that deployed this contract.
+          example: f39e3dbd-84af-4d3d-b5ac-98fbe047ce6a
+        deploymentTransactionId:
+          type: string
+          format: uuid
+          description: The id of the deployment transaction for this contract.
+          example: 00ca46f3-c31b-4e3a-92a9-068d4ff26a63
+        implementationContractId:
+          type: string
+          format: uuid
+          description: If this contract is a proxy, the contract ID of the implementation.
+          example: f3d81192-1f5d-4d17-ae85-5801a15ea273
+        txHash:
+          $ref: '#/components/schemas/TransactionHash'
+        abiJson:
+          $ref: '#/components/schemas/AbiJson'
+        archived:
+          $ref: '#/components/schemas/scp-schemas_Archived'
+        blockchain:
+          $ref: '#/components/schemas/scp-schemas_Blockchain'
+        bytecode:
+          $ref: '#/components/schemas/scp-schemas_Bytecode'
+        contractAddress:
+          type: string
+          description: The on-chain address of this contract.
+          example: '0x1e124d7384cd34448ea5907bd0052a79355ab5eb'
+        contractInputType:
+          $ref: '#/components/schemas/ContractInputType'
+        deployerAddress:
+          type: string
+          description: The address that created this contract, if deployed.
+          example: '0x1bf9ad0cc2ad298c69a2995aa806ee832788218c'
+        name:
+          $ref: '#/components/schemas/scp-schemas_ContractName'
+        description:
+          $ref: '#/components/schemas/ContractDescription'
+        status:
+          $ref: '#/components/schemas/ContractStatus'
+        verificationStatus:
+          $ref: '#/components/schemas/VerificationStatus'
+        metadataLink:
+          type: string
+          description: The ipfs metadata link of the contract.
+          example: https://ipfs.io/ipfs/Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu
+        updateDate:
+          $ref: '#/components/schemas/UpdateDate'
+        createDate:
+          $ref: '#/components/schemas/schemas_CreateDate'
+        sourceCode:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/SolFile'
+        functions:
+          type: array
+          description: Functions supported by this contract. Parsed from abi_json.
+          items:
+            $ref: '#/components/schemas/Function'
+        events:
+          type: array
+          description: Events this contract can emit. Parsed from abi_json.
+          items:
+            $ref: '#/components/schemas/Event'
+    scp-schemas_ContractResponse:
+      type: object
+      properties:
+        contract:
+          $ref: '#/components/schemas/scp-schemas_Contract'
+    scp-schemas_ContractDeploymentRequest:
+      type: object
+      required:
+        - abiJson
+        - bytecode
+        - entitySecretCiphertext
+        - idempotencyKey
+        - name
+      properties:
+        idempotencyKey:
+          $ref: '#/components/schemas/schemas_IdempotencyKey'
+        name:
+          $ref: '#/components/schemas/scp-schemas_ContractName'
+        description:
+          $ref: '#/components/schemas/ContractDescription'
+        walletId:
+          $ref: '#/components/schemas/schemas_WalletId'
+        abiJson:
+          $ref: '#/components/schemas/AbiJson'
+        bytecode:
+          $ref: '#/components/schemas/scp-schemas_Bytecode'
+        entitySecretCiphertext:
+          $ref: '#/components/schemas/EntitySecretCiphertext'
+        blockchain:
+          $ref: '#/components/schemas/scp-schemas_Blockchain'
+        constructorParameters:
+          $ref: '#/components/schemas/ConstructorParameters'
+        feeLevel:
+          $ref: '#/components/schemas/FeeLevel'
+        gasLimit:
+          $ref: '#/components/schemas/GasLimit'
+        gasPrice:
+          $ref: '#/components/schemas/GasPrice'
+        maxFee:
+          $ref: '#/components/schemas/MaxFee'
+        priorityFee:
+          $ref: '#/components/schemas/PriorityFee'
+        refId:
+          $ref: '#/components/schemas/TransactionReferenceId'
+    scp-schemas_ContractDeploymentResponse:
+      type: object
+      properties:
+        contractId:
+          type: string
+          description: Unique identifier of the created smart contract.
+          example: 676f83a8-81a1-4dd5-b738-e2509b8f5460
+        transactionId:
+          type: string
+          description: Unique identifier of the deployment transaction.
+          example: 36790743-b78d-4061-9558-1af9a9c837bd
+    scp-schemas_ContractDeploymentEstimateFeeRequest:
+      type: object
+      required:
+        - bytecode
+      properties:
+        blockchain:
+          $ref: '#/components/schemas/scp-schemas_Blockchain'
+        bytecode:
+          $ref: '#/components/schemas/scp-schemas_Bytecode'
+        constructorSignature:
+          $ref: '#/components/schemas/ConstructorSignature'
+        constructorParameters:
+          $ref: '#/components/schemas/ConstructorParameters'
+        sourceAddress:
+          $ref: '#/components/schemas/schemas_SourceAddress'
+        walletId:
+          $ref: '#/components/schemas/schemas_WalletId'
+    scp-schemas_ContractDeploymentEstimateFeeResponse:
+      type: object
+      properties:
+        high:
+          $ref: '#/components/schemas/EstimatedTransactionFee'
+        low:
+          $ref: '#/components/schemas/EstimatedTransactionFee'
+        medium:
+          $ref: '#/components/schemas/EstimatedTransactionFee'
+    scp-schemas_ReadContractStateRequest:
+      type: object
+      properties:
+        abiFunctionSignature:
+          $ref: '#/components/schemas/schemas_AbiFunctionSignature'
+        abiParameters:
+          $ref: '#/components/schemas/schemas_AbiParameters'
+    scp-schemas_ReadContractStateResponse:
+      type: object
+      properties:
+        outputValues:
+          type: array
+          description: Output for the ABI interaction.
+          items:
+            $ref: '#/components/schemas/AnyValue'
+    scp-schemas_ContractsResponse:
+      type: object
+      properties:
+        contracts:
+          type: array
+          description: Contracts are all the contracts that match criteria.
+          items:
+            $ref: '#/components/schemas/scp-schemas_Contract'
+    scp-schemas_PatchContractRequest:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/scp-schemas_ContractName'
+        description:
+          $ref: '#/components/schemas/ContractDescription'
+        archived:
+          $ref: '#/components/schemas/scp-schemas_Archived'
+    TemplateParameters:
+      type: object
+      description: JSON object that contains the template deployment parameters used to initialize the contract(s) on-chain.
+      additionalProperties:
+        type: string
+    TemplateContractDeploymentRequest:
+      type: object
+      required:
+        - blockchain
+        - entitySecretCiphertext
+        - idempotencyKey
+        - name
+        - walletId
+      properties:
+        idempotencyKey:
+          $ref: '#/components/schemas/schemas_IdempotencyKey'
+        blockchain:
+          $ref: '#/components/schemas/scp-schemas_Blockchain'
+        walletId:
+          $ref: '#/components/schemas/schemas_WalletId'
+        name:
+          description: Name of the contract in your Circle console.
+          maxLength: 100
+          minLength: 1
+          type: string
+          example: My Template Contract
+        description:
+          description: Description of the contract.
+          type: string
+          example: My first template contract deployment!
+        entitySecretCiphertext:
+          $ref: '#/components/schemas/EntitySecretCiphertext'
+        templateParameters:
+          $ref: '#/components/schemas/TemplateParameters'
+        feeLevel:
+          $ref: '#/components/schemas/FeeLevel'
+        gasLimit:
+          $ref: '#/components/schemas/GasLimit'
+        gasPrice:
+          $ref: '#/components/schemas/GasPrice'
+        maxFee:
+          $ref: '#/components/schemas/MaxFee'
+        priorityFee:
+          $ref: '#/components/schemas/PriorityFee'
+        refId:
+          $ref: '#/components/schemas/RefId'
+    TemplateContractDeploymentResponse:
+      type: object
+      properties:
+        contractIds:
+          type: array
+          description: Unique identifiers of the created smart contracts.
+          items:
+            type: string
+            format: uuid
+        transactionId:
+          description: Unique identifier of the pending deployment transaction. transaction.
+          type: string
+          format: uuid
+    EstimateDeployContractByTemplateFeeRequest:
+      type: object
+      required:
+        - blockchain
+        - templateParameters
+      properties:
+        blockchain:
+          $ref: '#/components/schemas/scp-schemas_Blockchain'
+        sourceAddress:
+          $ref: '#/components/schemas/SourceAddress'
+        templateParameters:
+          $ref: '#/components/schemas/TemplateParameters'
+        walletId:
+          $ref: '#/components/schemas/schemas_WalletId'
+    EstimateDeployContractByTemplateFeeResponse:
+      type: object
+      properties:
+        high:
+          $ref: '#/components/schemas/EstimatedTransactionFee'
+        low:
+          $ref: '#/components/schemas/EstimatedTransactionFee'
+        medium:
+          $ref: '#/components/schemas/EstimatedTransactionFee'
   securitySchemes:
     BearerAuth:
       type: http
@@ -3481,7 +4284,7 @@ components:
         minimum: 1
     Blockchain:
       name: blockchain
-      description: Blockchain filters on the blockchain of the transaction
+      description: Filter by blockchain.
       in: query
       schema:
         enum:
@@ -3492,6 +4295,71 @@ components:
           - MATIC
           - MATIC-MUMBAI
         type: string
+    parameters_From:
+      name: from
+      description: Queries items created since the specified date-time (inclusive).
+      in: query
+      schema:
+        type: string
+        format: date-time
+        example: '2023-01-01T12:04:05Z'
+    parameters_To:
+      name: to
+      description: Queries items created before the specified date-time (inclusive).
+      in: query
+      schema:
+        type: string
+        format: date-time
+        example: '2023-01-01T12:04:05Z'
+    parameters_PageBefore:
+      name: pageBefore
+      description: |
+        A collection ID value used for pagination.
+
+        It marks the exclusive end of a page. When provided, the collection resource will return the next n items before
+        the id, with n being specified by pageSize.
+
+        The items will be returned in the natural order of the collection.
+
+        The resource will return the first page if neither pageAfter nor pageBefore are specified. 
+
+        SHOULD NOT be used in conjuction with pageAfter.
+      in: query
+      schema:
+        type: string
+        format: uuid
+    parameters_PageAfter:
+      name: pageAfter
+      description: |
+        A collection ID value used for pagination.
+
+        It marks the exclusive begin of a page. When provided, the collection resource will return the next n items after
+        the id, with n being specified by pageSize.
+
+        The items will be returned in the natural order of the collection.
+
+        The resource will return the first page if neither pageAfter nor pageBefore are specified.
+
+        SHOULD NOT be used in conjuction with pageBefore.
+      in: query
+      schema:
+        type: string
+        format: uuid
+    parameters_PageSize:
+      name: pageSize
+      description: |
+        Limits the number of items to be returned.
+
+         Some collections have a strict upper bound that will disregard this value. In case the specified value is higher
+         than the allowed limit, the collection limit will be used.
+
+         If avoided, the collection will determine the page size itself.
+      in: query
+      schema:
+        type: integer
+        default: 10
+        maximum: 50
+        minimum: 1
     WalletSetIdPath:
       description: WalletSet ID
       in: path
@@ -3508,13 +4376,13 @@ components:
         type: string
     Address:
       name: address
-      description: Address is the address of the wallet
+      description: Filter by the Address of the wallet.
       in: query
       schema:
         type: string
     WalletSetIdQuery:
       name: walletSetId
-      description: WalletSetID is the wallet set the wallet belongs to
+      description: Filter by the wallet set the wallet belongs to.
       in: query
       schema:
         format: uuid
@@ -3528,25 +4396,25 @@ components:
         example: true
     Name:
       name: name
-      description: token name
+      description: Filter by token name.
       in: query
       schema:
         type: string
     TokenAddress:
       name: tokenAddress
-      description: tokenAddress is a list of token addresses separated by comma
+      description: Filter by token addresses.
       in: query
       schema:
         type: string
     Standard:
       name: standard
-      description: token standard
+      description: Filter by the token standard.
       in: query
       schema:
         type: string
     CustodyType:
       name: custodyType
-      description: CustodyType filters on the CustodyType of the transaction
+      description: Filter by the custody type.
       in: query
       schema:
         enum:
@@ -3555,13 +4423,13 @@ components:
         type: string
     DestinationAddress:
       name: destinationAddress
-      description: DestinationAddress filters on the DestinationAddress of the transaction
+      description: Filter by the destination address.
       in: query
       schema:
         type: string
     Operation:
       name: operation
-      description: Operation filters on the Operation of the transaction
+      description: Filter by on the operation of the transaction.
       in: query
       schema:
         enum:
@@ -3571,7 +4439,7 @@ components:
         type: string
     State:
       name: state
-      description: State filters on the state of the transaction
+      description: Filter by  the state of the transaction.
       in: query
       schema:
         type: string
@@ -3587,13 +4455,13 @@ components:
           - FAILED
     TxHash:
       name: txHash
-      description: TxHash filters on the TxHash of the transaction
+      description: Filter on the transaction hash of the transaction.
       in: query
       schema:
         type: string
     TxType:
       name: txType
-      description: TxType filters on the TxType of the transaction
+      description: Filter by on the transaction type.
       in: query
       schema:
         enum:
@@ -3602,13 +4470,13 @@ components:
         type: string
     WalletIds:
       name: walletIds
-      description: WalletIDs filters on the wallet ids of the transaction
+      description: Filter by the wallet IDs of the transaction.
       in: query
       schema:
         type: string
     PinStatus:
       name: pinStatus
-      description: PinStatus
+      description: Filter by the PIN status of the wallet.
       in: query
       schema:
         type: string
@@ -3618,7 +4486,7 @@ components:
           - LOCKED
     SecurityQuestionStatus:
       name: securityQuestionStatus
-      description: SecurityQuestionStatus
+      description: Filter by the security question status of the wallet.
       in: query
       schema:
         type: string
@@ -3634,7 +4502,7 @@ components:
       schema:
         type: string
     Status:
-      description: ExtChallenge status to query
+      description: Filter by external challenge status.
       in: query
       name: status
       schema:

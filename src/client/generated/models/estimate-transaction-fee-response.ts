@@ -41,5 +41,23 @@ export interface EstimateTransactionFeeResponse {
      * @memberof EstimateTransactionFeeResponse
      */
     'medium'?: EstimatedTransactionFee;
+    /**
+     * One of ERC-4337 gas fields. The amount of gas to allocate for the main execution call. Only in smart contract account estimation response.
+     * @type {string}
+     * @memberof EstimateTransactionFeeResponse
+     */
+    'callGasLimit'?: string;
+    /**
+     * One of ERC-4337 gas fields. The amount of gas to allocate for the verification step. Only in smart contract account estimation response.
+     * @type {string}
+     * @memberof EstimateTransactionFeeResponse
+     */
+    'verificationGasLimit'?: string;
+    /**
+     * One of ERC-4337 gas fields. The amount of gas to pay to compensate the bundler for pre-verification execution and call data. Only in smart contract account estimation response.
+     * @type {string}
+     * @memberof EstimateTransactionFeeResponse
+     */
+    'preVerificationGas'?: string;
 }
 

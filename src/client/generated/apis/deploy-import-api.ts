@@ -22,17 +22,17 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { ContractDeploymentEstimateFeeRequest } from '../models';
-// @ts-ignore
-import { ContractDeploymentRequest } from '../models';
-// @ts-ignore
 import { DeployContract200Response } from '../models';
 // @ts-ignore
 import { EstimateContractDeploy200Response } from '../models';
 // @ts-ignore
-import { ImportContact200Response } from '../models';
+import { ImportContract200Response } from '../models';
 // @ts-ignore
-import { ImportContractRequest } from '../models';
+import { ScpSchemasContractDeploymentEstimateFeeRequest } from '../models';
+// @ts-ignore
+import { ScpSchemasContractDeploymentRequest } from '../models';
+// @ts-ignore
+import { ScpSchemasImportContractRequest } from '../models';
 /**
  * DeployImportApi - axios parameter creator
  * @export
@@ -40,15 +40,15 @@ import { ImportContractRequest } from '../models';
 export const DeployImportApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Deploy a smart contract
+         * Deploy a smart contract on a specified blockchain using the contract\'s ABI and bytecode. The deployment will originate from one of your Circle Programmable Wallets.
          * @summary Deploy a contract
-         * @param {ContractDeploymentRequest} contractDeploymentRequest Deploy contract request
+         * @param {ScpSchemasContractDeploymentRequest} scpSchemasContractDeploymentRequest Deploy contract request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployContract: async (contractDeploymentRequest: ContractDeploymentRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'contractDeploymentRequest' is not null or undefined
-            assertParamExists('deployContract', 'contractDeploymentRequest', contractDeploymentRequest)
+        deployContract: async (scpSchemasContractDeploymentRequest: ScpSchemasContractDeploymentRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'scpSchemasContractDeploymentRequest' is not null or undefined
+            assertParamExists('deployContract', 'scpSchemasContractDeploymentRequest', scpSchemasContractDeploymentRequest)
             const localVarPath = `/contracts/deploy`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -72,7 +72,7 @@ export const DeployImportApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(contractDeploymentRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(scpSchemasContractDeploymentRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -80,15 +80,15 @@ export const DeployImportApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Estimate the transaction fee for deploying a smart contract
+         * Estimate the network fee for deploying a smart contract on a specified blockchain, given the contract bytecode.
          * @summary Estimate a contract deployment
-         * @param {ContractDeploymentEstimateFeeRequest} contractDeploymentEstimateFeeRequest Estimate a transaction fee for deploying a smart contract
+         * @param {ScpSchemasContractDeploymentEstimateFeeRequest} scpSchemasContractDeploymentEstimateFeeRequest Estimate a transaction fee for deploying a smart contract
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        estimateContractDeploy: async (contractDeploymentEstimateFeeRequest: ContractDeploymentEstimateFeeRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'contractDeploymentEstimateFeeRequest' is not null or undefined
-            assertParamExists('estimateContractDeploy', 'contractDeploymentEstimateFeeRequest', contractDeploymentEstimateFeeRequest)
+        estimateContractDeploy: async (scpSchemasContractDeploymentEstimateFeeRequest: ScpSchemasContractDeploymentEstimateFeeRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'scpSchemasContractDeploymentEstimateFeeRequest' is not null or undefined
+            assertParamExists('estimateContractDeploy', 'scpSchemasContractDeploymentEstimateFeeRequest', scpSchemasContractDeploymentEstimateFeeRequest)
             const localVarPath = `/contracts/deploy/estimateFee`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -112,7 +112,7 @@ export const DeployImportApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(contractDeploymentEstimateFeeRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(scpSchemasContractDeploymentEstimateFeeRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -120,15 +120,15 @@ export const DeployImportApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Import contract
+         * Add an existing smart contract to your library of contracts. It also can be done in the Web3 Services Console.
          * @summary Import a contract
-         * @param {ImportContractRequest} importContractRequest Import contract request
+         * @param {ScpSchemasImportContractRequest} scpSchemasImportContractRequest Import contract request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        importContact: async (importContractRequest: ImportContractRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'importContractRequest' is not null or undefined
-            assertParamExists('importContact', 'importContractRequest', importContractRequest)
+        importContract: async (scpSchemasImportContractRequest: ScpSchemasImportContractRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'scpSchemasImportContractRequest' is not null or undefined
+            assertParamExists('importContract', 'scpSchemasImportContractRequest', scpSchemasImportContractRequest)
             const localVarPath = `/contracts/import`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -152,7 +152,7 @@ export const DeployImportApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(importContractRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(scpSchemasImportContractRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -170,36 +170,36 @@ export const DeployImportApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DeployImportApiAxiosParamCreator(configuration)
     return {
         /**
-         * Deploy a smart contract
+         * Deploy a smart contract on a specified blockchain using the contract\'s ABI and bytecode. The deployment will originate from one of your Circle Programmable Wallets.
          * @summary Deploy a contract
-         * @param {ContractDeploymentRequest} contractDeploymentRequest Deploy contract request
+         * @param {ScpSchemasContractDeploymentRequest} scpSchemasContractDeploymentRequest Deploy contract request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deployContract(contractDeploymentRequest: ContractDeploymentRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployContract200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deployContract(contractDeploymentRequest, options);
+        async deployContract(scpSchemasContractDeploymentRequest: ScpSchemasContractDeploymentRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployContract200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployContract(scpSchemasContractDeploymentRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Estimate the transaction fee for deploying a smart contract
+         * Estimate the network fee for deploying a smart contract on a specified blockchain, given the contract bytecode.
          * @summary Estimate a contract deployment
-         * @param {ContractDeploymentEstimateFeeRequest} contractDeploymentEstimateFeeRequest Estimate a transaction fee for deploying a smart contract
+         * @param {ScpSchemasContractDeploymentEstimateFeeRequest} scpSchemasContractDeploymentEstimateFeeRequest Estimate a transaction fee for deploying a smart contract
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async estimateContractDeploy(contractDeploymentEstimateFeeRequest: ContractDeploymentEstimateFeeRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EstimateContractDeploy200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.estimateContractDeploy(contractDeploymentEstimateFeeRequest, options);
+        async estimateContractDeploy(scpSchemasContractDeploymentEstimateFeeRequest: ScpSchemasContractDeploymentEstimateFeeRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EstimateContractDeploy200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.estimateContractDeploy(scpSchemasContractDeploymentEstimateFeeRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Import contract
+         * Add an existing smart contract to your library of contracts. It also can be done in the Web3 Services Console.
          * @summary Import a contract
-         * @param {ImportContractRequest} importContractRequest Import contract request
+         * @param {ScpSchemasImportContractRequest} scpSchemasImportContractRequest Import contract request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async importContact(importContractRequest: ImportContractRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImportContact200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.importContact(importContractRequest, options);
+        async importContract(scpSchemasImportContractRequest: ScpSchemasImportContractRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImportContract200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.importContract(scpSchemasImportContractRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -213,34 +213,34 @@ export const DeployImportApiFactory = function (configuration?: Configuration, b
     const localVarFp = DeployImportApiFp(configuration)
     return {
         /**
-         * Deploy a smart contract
+         * Deploy a smart contract on a specified blockchain using the contract\'s ABI and bytecode. The deployment will originate from one of your Circle Programmable Wallets.
          * @summary Deploy a contract
-         * @param {ContractDeploymentRequest} contractDeploymentRequest Deploy contract request
+         * @param {ScpSchemasContractDeploymentRequest} scpSchemasContractDeploymentRequest Deploy contract request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployContract(contractDeploymentRequest: ContractDeploymentRequest, options?: any): AxiosPromise<DeployContract200Response> {
-            return localVarFp.deployContract(contractDeploymentRequest, options).then((request) => request(axios, basePath));
+        deployContract(scpSchemasContractDeploymentRequest: ScpSchemasContractDeploymentRequest, options?: any): AxiosPromise<DeployContract200Response> {
+            return localVarFp.deployContract(scpSchemasContractDeploymentRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Estimate the transaction fee for deploying a smart contract
+         * Estimate the network fee for deploying a smart contract on a specified blockchain, given the contract bytecode.
          * @summary Estimate a contract deployment
-         * @param {ContractDeploymentEstimateFeeRequest} contractDeploymentEstimateFeeRequest Estimate a transaction fee for deploying a smart contract
+         * @param {ScpSchemasContractDeploymentEstimateFeeRequest} scpSchemasContractDeploymentEstimateFeeRequest Estimate a transaction fee for deploying a smart contract
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        estimateContractDeploy(contractDeploymentEstimateFeeRequest: ContractDeploymentEstimateFeeRequest, options?: any): AxiosPromise<EstimateContractDeploy200Response> {
-            return localVarFp.estimateContractDeploy(contractDeploymentEstimateFeeRequest, options).then((request) => request(axios, basePath));
+        estimateContractDeploy(scpSchemasContractDeploymentEstimateFeeRequest: ScpSchemasContractDeploymentEstimateFeeRequest, options?: any): AxiosPromise<EstimateContractDeploy200Response> {
+            return localVarFp.estimateContractDeploy(scpSchemasContractDeploymentEstimateFeeRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Import contract
+         * Add an existing smart contract to your library of contracts. It also can be done in the Web3 Services Console.
          * @summary Import a contract
-         * @param {ImportContractRequest} importContractRequest Import contract request
+         * @param {ScpSchemasImportContractRequest} scpSchemasImportContractRequest Import contract request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        importContact(importContractRequest: ImportContractRequest, options?: any): AxiosPromise<ImportContact200Response> {
-            return localVarFp.importContact(importContractRequest, options).then((request) => request(axios, basePath));
+        importContract(scpSchemasImportContractRequest: ScpSchemasImportContractRequest, options?: any): AxiosPromise<ImportContract200Response> {
+            return localVarFp.importContract(scpSchemasImportContractRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -253,39 +253,39 @@ export const DeployImportApiFactory = function (configuration?: Configuration, b
  */
 export class DeployImportApi extends BaseAPI {
     /**
-     * Deploy a smart contract
+     * Deploy a smart contract on a specified blockchain using the contract\'s ABI and bytecode. The deployment will originate from one of your Circle Programmable Wallets.
      * @summary Deploy a contract
-     * @param {ContractDeploymentRequest} contractDeploymentRequest Deploy contract request
+     * @param {ScpSchemasContractDeploymentRequest} scpSchemasContractDeploymentRequest Deploy contract request
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployImportApi
      */
-    public deployContract(contractDeploymentRequest: ContractDeploymentRequest, options?: AxiosRequestConfig) {
-        return DeployImportApiFp(this.configuration).deployContract(contractDeploymentRequest, options).then((request) => request(this.axios, this.basePath));
+    public deployContract(scpSchemasContractDeploymentRequest: ScpSchemasContractDeploymentRequest, options?: AxiosRequestConfig) {
+        return DeployImportApiFp(this.configuration).deployContract(scpSchemasContractDeploymentRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Estimate the transaction fee for deploying a smart contract
+     * Estimate the network fee for deploying a smart contract on a specified blockchain, given the contract bytecode.
      * @summary Estimate a contract deployment
-     * @param {ContractDeploymentEstimateFeeRequest} contractDeploymentEstimateFeeRequest Estimate a transaction fee for deploying a smart contract
+     * @param {ScpSchemasContractDeploymentEstimateFeeRequest} scpSchemasContractDeploymentEstimateFeeRequest Estimate a transaction fee for deploying a smart contract
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployImportApi
      */
-    public estimateContractDeploy(contractDeploymentEstimateFeeRequest: ContractDeploymentEstimateFeeRequest, options?: AxiosRequestConfig) {
-        return DeployImportApiFp(this.configuration).estimateContractDeploy(contractDeploymentEstimateFeeRequest, options).then((request) => request(this.axios, this.basePath));
+    public estimateContractDeploy(scpSchemasContractDeploymentEstimateFeeRequest: ScpSchemasContractDeploymentEstimateFeeRequest, options?: AxiosRequestConfig) {
+        return DeployImportApiFp(this.configuration).estimateContractDeploy(scpSchemasContractDeploymentEstimateFeeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Import contract
+     * Add an existing smart contract to your library of contracts. It also can be done in the Web3 Services Console.
      * @summary Import a contract
-     * @param {ImportContractRequest} importContractRequest Import contract request
+     * @param {ScpSchemasImportContractRequest} scpSchemasImportContractRequest Import contract request
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployImportApi
      */
-    public importContact(importContractRequest: ImportContractRequest, options?: AxiosRequestConfig) {
-        return DeployImportApiFp(this.configuration).importContact(importContractRequest, options).then((request) => request(this.axios, this.basePath));
+    public importContract(scpSchemasImportContractRequest: ScpSchemasImportContractRequest, options?: AxiosRequestConfig) {
+        return DeployImportApiFp(this.configuration).importContract(scpSchemasImportContractRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

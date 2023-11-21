@@ -89,7 +89,8 @@ async function initializeUser(userToken: string) {
       userToken,
       {
         idempotencyKey: uuidv4(),
-        blockchains: ["ETH-GOERLI"],
+        blockchains: ["MATIC-MUMBAI"],
+        accountType: "SCA",
       }
     );
     return response.data;

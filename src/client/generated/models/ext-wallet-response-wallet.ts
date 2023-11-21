@@ -15,10 +15,13 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Blockchain } from './blockchain';
+import { AccountType } from './account-type';
 // May contain unused imports in some cases
 // @ts-ignore
 import { CustodyType } from './custody-type';
+// May contain unused imports in some cases
+// @ts-ignore
+import { SchemasBlockchain } from './schemas-blockchain';
 // May contain unused imports in some cases
 // @ts-ignore
 import { WalletState } from './wallet-state';
@@ -30,6 +33,12 @@ import { WalletState } from './wallet-state';
  */
 export interface ExtWalletResponseWallet {
     /**
+     * Unique system generated identifier of the resource.
+     * @type {string}
+     * @memberof ExtWalletResponseWallet
+     */
+    'id'?: string;
+    /**
      * The blockchain address generated upon wallet creation.
      * @type {string}
      * @memberof ExtWalletResponseWallet
@@ -37,10 +46,10 @@ export interface ExtWalletResponseWallet {
     'address'?: string;
     /**
      * 
-     * @type {Blockchain}
+     * @type {SchemasBlockchain}
      * @memberof ExtWalletResponseWallet
      */
-    'blockchain'?: Blockchain;
+    'blockchain'?: SchemasBlockchain;
     /**
      * Date and time the resource was created. ISO-8601 UTC date/time.
      * @type {string}
@@ -54,11 +63,11 @@ export interface ExtWalletResponseWallet {
      */
     'custodyType'?: CustodyType;
     /**
-     * Unique system generated identifier of the resource.
-     * @type {string}
+     * 
+     * @type {AccountType}
      * @memberof ExtWalletResponseWallet
      */
-    'id'?: string;
+    'accountType'?: AccountType;
     /**
      * Name or description associated with the wallet.
      * @type {string}

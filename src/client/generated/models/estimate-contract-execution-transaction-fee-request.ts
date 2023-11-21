@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Blockchain } from './blockchain';
+import { SchemasBlockchain } from './schemas-blockchain';
 
 /**
  * 
@@ -24,23 +24,35 @@ import { Blockchain } from './blockchain';
  */
 export interface EstimateContractExecutionTransactionFeeRequest {
     /**
-     * The contract abi function signature to be interacted with in the smart contract. e.g. burn(uint256)
+     * The contract ABI function signature or `callData` field is required for interacting with the smart contract. The ABI function signature cannot be used simultaneously with `callData`. e.g. burn(uint256)
      * @type {string}
      * @memberof EstimateContractExecutionTransactionFeeRequest
      */
     'abiFunctionSignature': string;
     /**
-     * The parameters required by the contract abi function to perform the contract interaction. Supported types included string, integer, boolean, and array.
+     * The contract ABI function signature parameters for executing the contract interaction. Supported parameter types include string, integer, boolean, and array. These parameters should be used exclusively with the abiFunctionSignature and cannot be used with `callData`.
      * @type {Array<string>}
      * @memberof EstimateContractExecutionTransactionFeeRequest
      */
-    'abiParameters': Array<string>;
+    'abiParameters'?: Array<string>;
     /**
-     * 
-     * @type {Blockchain}
+     * The raw transaction data, must be an even-length hexadecimal string with the `0x` prefix, to be executed. It is important to note that the usage of `callData` is mutually exclusive with the `abiFunctionSignature` and `abiParameters`. Therefore, `callData` cannot be utilized simultaneously with either `abiFunctionSignature` or `abiParameters`.
+     * @type {string}
      * @memberof EstimateContractExecutionTransactionFeeRequest
      */
-    'blockchain'?: Blockchain;
+    'callData'?: string;
+    /**
+     * The amount of native token that will be sent to the contract abi execution. Optional field for payable api only, if not provided, no native token will be sent.
+     * @type {string}
+     * @memberof EstimateContractExecutionTransactionFeeRequest
+     */
+    'amount'?: string;
+    /**
+     * 
+     * @type {SchemasBlockchain}
+     * @memberof EstimateContractExecutionTransactionFeeRequest
+     */
+    'blockchain'?: SchemasBlockchain;
     /**
      * The blockchain address of the contract to be executed.
      * @type {string}
@@ -54,7 +66,7 @@ export interface EstimateContractExecutionTransactionFeeRequest {
      */
     'sourceAddress'?: string;
     /**
-     * Unique system generated identifier of the wallet. Required when source Address and blockchain is not provided. Mutually exclusive
+     * Unique system generated identifier of the wallet. Required when source Address and blockchain is not provided. Mutually exclusive. For contract deploys this wallet ID will be used as the source.
      * @type {string}
      * @memberof EstimateContractExecutionTransactionFeeRequest
      */

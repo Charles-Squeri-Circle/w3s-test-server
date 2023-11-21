@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Blockchain } from './blockchain';
+import { SchemasBlockchain } from './schemas-blockchain';
 
 /**
  * 
@@ -31,10 +31,10 @@ export interface ValidateAddressRequest {
     'address': string;
     /**
      * 
-     * @type {Blockchain}
+     * @type {SchemasBlockchain}
      * @memberof ValidateAddressRequest
      */
-    'blockchain': Blockchain;
+    'blockchain': SchemasBlockchain;
 }
 
 

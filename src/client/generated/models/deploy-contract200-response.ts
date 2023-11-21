@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { ContractDeploymentResponse } from './contract-deployment-response';
+import { ScpSchemasContractDeploymentResponse } from './scp-schemas-contract-deployment-response';
 
 /**
  * 
@@ -25,9 +25,9 @@ import { ContractDeploymentResponse } from './contract-deployment-response';
 export interface DeployContract200Response {
     /**
      * 
-     * @type {ContractDeploymentResponse}
+     * @type {ScpSchemasContractDeploymentResponse}
      * @memberof DeployContract200Response
      */
-    'data'?: ContractDeploymentResponse;
+    'data'?: ScpSchemasContractDeploymentResponse;
 }
 

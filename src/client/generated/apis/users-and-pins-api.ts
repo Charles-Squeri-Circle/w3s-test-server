@@ -406,7 +406,7 @@ export const UsersAndPinsApiAxiosParamCreator = function (configuration?: Config
          * List all challenges by status for a user.
          * @summary List challenges
          * @param {string} xUserToken User token
-         * @param {ListUserChallengesStatusEnum} [status] ExtChallenge status to query
+         * @param {ListUserChallengesStatusEnum} [status] Filter by external challenge status.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -451,13 +451,13 @@ export const UsersAndPinsApiAxiosParamCreator = function (configuration?: Config
         /**
          * Get all the users under the entity, sorted by the create date DESC order.
          * @summary List users
-         * @param {ListUsersPinStatusEnum} [pinStatus] PinStatus
-         * @param {ListUsersSecurityQuestionStatusEnum} [securityQuestionStatus] SecurityQuestionStatus
-         * @param {string} [from] From is the start time of the query, inclusive
-         * @param {string} [to] To is the end time of the query, inclusive, default to current time
-         * @param {string} [pageBefore] PageBefore is used to return items before the given item exclusively. SHOULD NOT be used in conjunction with pageAfter
-         * @param {string} [pageAfter] PageAfter is used to return items after the given item exclusively. SHOULD NOT be used in conjunction with pageBefore
-         * @param {number} [pageSize] PageSize is the number of items to return
+         * @param {ListUsersPinStatusEnum} [pinStatus] Filter by the PIN status of the wallet.
+         * @param {ListUsersSecurityQuestionStatusEnum} [securityQuestionStatus] Filter by the security question status of the wallet.
+         * @param {string} [from] Queries items created since the specified date-time (inclusive).
+         * @param {string} [to] Queries items created before the specified date-time (inclusive).
+         * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next n items before the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.   SHOULD NOT be used in conjuction with pageAfter. 
+         * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next n items after the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.  SHOULD NOT be used in conjuction with pageBefore. 
+         * @param {number} [pageSize] Limits the number of items to be returned.   Some collections have a strict upper bound that will disregard this value. In case the specified value is higher  than the allowed limit, the collection limit will be used.   If avoided, the collection will determine the page size itself. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -674,7 +674,7 @@ export const UsersAndPinsApiFp = function(configuration?: Configuration) {
          * List all challenges by status for a user.
          * @summary List challenges
          * @param {string} xUserToken User token
-         * @param {ListUserChallengesStatusEnum} [status] ExtChallenge status to query
+         * @param {ListUserChallengesStatusEnum} [status] Filter by external challenge status.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -685,13 +685,13 @@ export const UsersAndPinsApiFp = function(configuration?: Configuration) {
         /**
          * Get all the users under the entity, sorted by the create date DESC order.
          * @summary List users
-         * @param {ListUsersPinStatusEnum} [pinStatus] PinStatus
-         * @param {ListUsersSecurityQuestionStatusEnum} [securityQuestionStatus] SecurityQuestionStatus
-         * @param {string} [from] From is the start time of the query, inclusive
-         * @param {string} [to] To is the end time of the query, inclusive, default to current time
-         * @param {string} [pageBefore] PageBefore is used to return items before the given item exclusively. SHOULD NOT be used in conjunction with pageAfter
-         * @param {string} [pageAfter] PageAfter is used to return items after the given item exclusively. SHOULD NOT be used in conjunction with pageBefore
-         * @param {number} [pageSize] PageSize is the number of items to return
+         * @param {ListUsersPinStatusEnum} [pinStatus] Filter by the PIN status of the wallet.
+         * @param {ListUsersSecurityQuestionStatusEnum} [securityQuestionStatus] Filter by the security question status of the wallet.
+         * @param {string} [from] Queries items created since the specified date-time (inclusive).
+         * @param {string} [to] Queries items created before the specified date-time (inclusive).
+         * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next n items before the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.   SHOULD NOT be used in conjuction with pageAfter. 
+         * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next n items after the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.  SHOULD NOT be used in conjuction with pageBefore. 
+         * @param {number} [pageSize] Limits the number of items to be returned.   Some collections have a strict upper bound that will disregard this value. In case the specified value is higher  than the allowed limit, the collection limit will be used.   If avoided, the collection will determine the page size itself. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -809,7 +809,7 @@ export const UsersAndPinsApiFactory = function (configuration?: Configuration, b
          * List all challenges by status for a user.
          * @summary List challenges
          * @param {string} xUserToken User token
-         * @param {ListUserChallengesStatusEnum} [status] ExtChallenge status to query
+         * @param {ListUserChallengesStatusEnum} [status] Filter by external challenge status.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -819,13 +819,13 @@ export const UsersAndPinsApiFactory = function (configuration?: Configuration, b
         /**
          * Get all the users under the entity, sorted by the create date DESC order.
          * @summary List users
-         * @param {ListUsersPinStatusEnum} [pinStatus] PinStatus
-         * @param {ListUsersSecurityQuestionStatusEnum} [securityQuestionStatus] SecurityQuestionStatus
-         * @param {string} [from] From is the start time of the query, inclusive
-         * @param {string} [to] To is the end time of the query, inclusive, default to current time
-         * @param {string} [pageBefore] PageBefore is used to return items before the given item exclusively. SHOULD NOT be used in conjunction with pageAfter
-         * @param {string} [pageAfter] PageAfter is used to return items after the given item exclusively. SHOULD NOT be used in conjunction with pageBefore
-         * @param {number} [pageSize] PageSize is the number of items to return
+         * @param {ListUsersPinStatusEnum} [pinStatus] Filter by the PIN status of the wallet.
+         * @param {ListUsersSecurityQuestionStatusEnum} [securityQuestionStatus] Filter by the security question status of the wallet.
+         * @param {string} [from] Queries items created since the specified date-time (inclusive).
+         * @param {string} [to] Queries items created before the specified date-time (inclusive).
+         * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next n items before the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.   SHOULD NOT be used in conjuction with pageAfter. 
+         * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next n items after the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.  SHOULD NOT be used in conjuction with pageBefore. 
+         * @param {number} [pageSize] Limits the number of items to be returned.   Some collections have a strict upper bound that will disregard this value. In case the specified value is higher  than the allowed limit, the collection limit will be used.   If avoided, the collection will determine the page size itself. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -957,7 +957,7 @@ export class UsersAndPinsApi extends BaseAPI {
      * List all challenges by status for a user.
      * @summary List challenges
      * @param {string} xUserToken User token
-     * @param {ListUserChallengesStatusEnum} [status] ExtChallenge status to query
+     * @param {ListUserChallengesStatusEnum} [status] Filter by external challenge status.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersAndPinsApi
@@ -969,13 +969,13 @@ export class UsersAndPinsApi extends BaseAPI {
     /**
      * Get all the users under the entity, sorted by the create date DESC order.
      * @summary List users
-     * @param {ListUsersPinStatusEnum} [pinStatus] PinStatus
-     * @param {ListUsersSecurityQuestionStatusEnum} [securityQuestionStatus] SecurityQuestionStatus
-     * @param {string} [from] From is the start time of the query, inclusive
-     * @param {string} [to] To is the end time of the query, inclusive, default to current time
-     * @param {string} [pageBefore] PageBefore is used to return items before the given item exclusively. SHOULD NOT be used in conjunction with pageAfter
-     * @param {string} [pageAfter] PageAfter is used to return items after the given item exclusively. SHOULD NOT be used in conjunction with pageBefore
-     * @param {number} [pageSize] PageSize is the number of items to return
+     * @param {ListUsersPinStatusEnum} [pinStatus] Filter by the PIN status of the wallet.
+     * @param {ListUsersSecurityQuestionStatusEnum} [securityQuestionStatus] Filter by the security question status of the wallet.
+     * @param {string} [from] Queries items created since the specified date-time (inclusive).
+     * @param {string} [to] Queries items created before the specified date-time (inclusive).
+     * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next n items before the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.   SHOULD NOT be used in conjuction with pageAfter. 
+     * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next n items after the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.  SHOULD NOT be used in conjuction with pageBefore. 
+     * @param {number} [pageSize] Limits the number of items to be returned.   Some collections have a strict upper bound that will disregard this value. In case the specified value is higher  than the allowed limit, the collection limit will be used.   If avoided, the collection will determine the page size itself. 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersAndPinsApi

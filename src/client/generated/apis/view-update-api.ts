@@ -22,11 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { ImportContact200Response } from '../models';
+import { ImportContract200Response } from '../models';
 // @ts-ignore
 import { ListContracts200Response } from '../models';
 // @ts-ignore
-import { PatchContractRequest } from '../models';
+import { ScpSchemasPatchContractRequest } from '../models';
 /**
  * ViewUpdateApi - axios parameter creator
  * @export
@@ -34,7 +34,7 @@ import { PatchContractRequest } from '../models';
 export const ViewUpdateApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Get a contract by id. This does not support getting a contract by address.
+         * Get a single contract that you\'ve imported or deployed. Retrieved using the contracts ID as opposed to the on-chain address.
          * @summary Get a contract
          * @param {string} id Contract id
          * @param {*} [options] Override http request option.
@@ -72,18 +72,18 @@ export const ViewUpdateApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * List all contracts
+         * Fetch a list of contracts that you\'ve imported and/or deployed.
          * @summary List contracts
-         * @param {ListContractsBlockchainEnum} [blockchain] Blockchain is the blockchain filter for contracts
-         * @param {ListContractsContractInputTypeEnum} [contractInputType] ContractInputType is the input type filter for contracts
-         * @param {string} [deployerAddress] DeployerAddress is the deployer wallet address filter for contracts
-         * @param {string} [name] Name is the name filter for contracts
-         * @param {ListContractsStatusEnum} [status] Status is the status filter for contracts
-         * @param {string} [from] From is the start time of the query, inclusive
-         * @param {string} [to] To is the end time of the query, inclusive, default to current time
-         * @param {string} [pageBefore] PageBefore is used to return items before the given item exclusively. SHOULD NOT be used in conjunction with pageAfter
-         * @param {string} [pageAfter] PageAfter is used to return items after the given item exclusively. SHOULD NOT be used in conjunction with pageBefore
-         * @param {number} [pageSize] PageSize is the number of items to return
+         * @param {ListContractsBlockchainEnum} [blockchain] Filter by blockchain.
+         * @param {ListContractsContractInputTypeEnum} [contractInputType] Filter contracts by input type.
+         * @param {string} [deployerAddress] Filter contracts by deployer address.
+         * @param {string} [name] Filter contracts by name.
+         * @param {ListContractsStatusEnum} [status] Filter contracts by status.
+         * @param {string} [from] Queries items created since the specified date-time (inclusive).
+         * @param {string} [to] Queries items created before the specified date-time (inclusive).
+         * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next n items before the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.   SHOULD NOT be used in conjuction with pageAfter. 
+         * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next n items after the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.  SHOULD NOT be used in conjuction with pageBefore. 
+         * @param {number} [pageSize] Limits the number of items to be returned.   Some collections have a strict upper bound that will disregard this value. In case the specified value is higher  than the allowed limit, the collection limit will be used.   If avoided, the collection will determine the page size itself. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -160,18 +160,18 @@ export const ViewUpdateApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Update off-chain contract properties
+         * Update the off-chain properties, such as description, of a contract that you\'ve imported or deployed. Updated using the contracts ID as opposed to the on-chain address.
          * @summary Update a contract
          * @param {string} id Contract id
-         * @param {PatchContractRequest} patchContractRequest Update contract properties request
+         * @param {ScpSchemasPatchContractRequest} scpSchemasPatchContractRequest Update contract properties request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateContract: async (id: string, patchContractRequest: PatchContractRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateContract: async (id: string, scpSchemasPatchContractRequest: ScpSchemasPatchContractRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateContract', 'id', id)
-            // verify required parameter 'patchContractRequest' is not null or undefined
-            assertParamExists('updateContract', 'patchContractRequest', patchContractRequest)
+            // verify required parameter 'scpSchemasPatchContractRequest' is not null or undefined
+            assertParamExists('updateContract', 'scpSchemasPatchContractRequest', scpSchemasPatchContractRequest)
             const localVarPath = `/contracts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -196,7 +196,7 @@ export const ViewUpdateApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(patchContractRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(scpSchemasPatchContractRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -214,29 +214,29 @@ export const ViewUpdateApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ViewUpdateApiAxiosParamCreator(configuration)
     return {
         /**
-         * Get a contract by id. This does not support getting a contract by address.
+         * Get a single contract that you\'ve imported or deployed. Retrieved using the contracts ID as opposed to the on-chain address.
          * @summary Get a contract
          * @param {string} id Contract id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getContract(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImportContact200Response>> {
+        async getContract(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImportContract200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContract(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * List all contracts
+         * Fetch a list of contracts that you\'ve imported and/or deployed.
          * @summary List contracts
-         * @param {ListContractsBlockchainEnum} [blockchain] Blockchain is the blockchain filter for contracts
-         * @param {ListContractsContractInputTypeEnum} [contractInputType] ContractInputType is the input type filter for contracts
-         * @param {string} [deployerAddress] DeployerAddress is the deployer wallet address filter for contracts
-         * @param {string} [name] Name is the name filter for contracts
-         * @param {ListContractsStatusEnum} [status] Status is the status filter for contracts
-         * @param {string} [from] From is the start time of the query, inclusive
-         * @param {string} [to] To is the end time of the query, inclusive, default to current time
-         * @param {string} [pageBefore] PageBefore is used to return items before the given item exclusively. SHOULD NOT be used in conjunction with pageAfter
-         * @param {string} [pageAfter] PageAfter is used to return items after the given item exclusively. SHOULD NOT be used in conjunction with pageBefore
-         * @param {number} [pageSize] PageSize is the number of items to return
+         * @param {ListContractsBlockchainEnum} [blockchain] Filter by blockchain.
+         * @param {ListContractsContractInputTypeEnum} [contractInputType] Filter contracts by input type.
+         * @param {string} [deployerAddress] Filter contracts by deployer address.
+         * @param {string} [name] Filter contracts by name.
+         * @param {ListContractsStatusEnum} [status] Filter contracts by status.
+         * @param {string} [from] Queries items created since the specified date-time (inclusive).
+         * @param {string} [to] Queries items created before the specified date-time (inclusive).
+         * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next n items before the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.   SHOULD NOT be used in conjuction with pageAfter. 
+         * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next n items after the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.  SHOULD NOT be used in conjuction with pageBefore. 
+         * @param {number} [pageSize] Limits the number of items to be returned.   Some collections have a strict upper bound that will disregard this value. In case the specified value is higher  than the allowed limit, the collection limit will be used.   If avoided, the collection will determine the page size itself. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -245,15 +245,15 @@ export const ViewUpdateApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Update off-chain contract properties
+         * Update the off-chain properties, such as description, of a contract that you\'ve imported or deployed. Updated using the contracts ID as opposed to the on-chain address.
          * @summary Update a contract
          * @param {string} id Contract id
-         * @param {PatchContractRequest} patchContractRequest Update contract properties request
+         * @param {ScpSchemasPatchContractRequest} scpSchemasPatchContractRequest Update contract properties request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateContract(id: string, patchContractRequest: PatchContractRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImportContact200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateContract(id, patchContractRequest, options);
+        async updateContract(id: string, scpSchemasPatchContractRequest: ScpSchemasPatchContractRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImportContract200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateContract(id, scpSchemasPatchContractRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -267,28 +267,28 @@ export const ViewUpdateApiFactory = function (configuration?: Configuration, bas
     const localVarFp = ViewUpdateApiFp(configuration)
     return {
         /**
-         * Get a contract by id. This does not support getting a contract by address.
+         * Get a single contract that you\'ve imported or deployed. Retrieved using the contracts ID as opposed to the on-chain address.
          * @summary Get a contract
          * @param {string} id Contract id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContract(id: string, options?: any): AxiosPromise<ImportContact200Response> {
+        getContract(id: string, options?: any): AxiosPromise<ImportContract200Response> {
             return localVarFp.getContract(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * List all contracts
+         * Fetch a list of contracts that you\'ve imported and/or deployed.
          * @summary List contracts
-         * @param {ListContractsBlockchainEnum} [blockchain] Blockchain is the blockchain filter for contracts
-         * @param {ListContractsContractInputTypeEnum} [contractInputType] ContractInputType is the input type filter for contracts
-         * @param {string} [deployerAddress] DeployerAddress is the deployer wallet address filter for contracts
-         * @param {string} [name] Name is the name filter for contracts
-         * @param {ListContractsStatusEnum} [status] Status is the status filter for contracts
-         * @param {string} [from] From is the start time of the query, inclusive
-         * @param {string} [to] To is the end time of the query, inclusive, default to current time
-         * @param {string} [pageBefore] PageBefore is used to return items before the given item exclusively. SHOULD NOT be used in conjunction with pageAfter
-         * @param {string} [pageAfter] PageAfter is used to return items after the given item exclusively. SHOULD NOT be used in conjunction with pageBefore
-         * @param {number} [pageSize] PageSize is the number of items to return
+         * @param {ListContractsBlockchainEnum} [blockchain] Filter by blockchain.
+         * @param {ListContractsContractInputTypeEnum} [contractInputType] Filter contracts by input type.
+         * @param {string} [deployerAddress] Filter contracts by deployer address.
+         * @param {string} [name] Filter contracts by name.
+         * @param {ListContractsStatusEnum} [status] Filter contracts by status.
+         * @param {string} [from] Queries items created since the specified date-time (inclusive).
+         * @param {string} [to] Queries items created before the specified date-time (inclusive).
+         * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next n items before the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.   SHOULD NOT be used in conjuction with pageAfter. 
+         * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next n items after the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.  SHOULD NOT be used in conjuction with pageBefore. 
+         * @param {number} [pageSize] Limits the number of items to be returned.   Some collections have a strict upper bound that will disregard this value. In case the specified value is higher  than the allowed limit, the collection limit will be used.   If avoided, the collection will determine the page size itself. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -296,15 +296,15 @@ export const ViewUpdateApiFactory = function (configuration?: Configuration, bas
             return localVarFp.listContracts(blockchain, contractInputType, deployerAddress, name, status, from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(axios, basePath));
         },
         /**
-         * Update off-chain contract properties
+         * Update the off-chain properties, such as description, of a contract that you\'ve imported or deployed. Updated using the contracts ID as opposed to the on-chain address.
          * @summary Update a contract
          * @param {string} id Contract id
-         * @param {PatchContractRequest} patchContractRequest Update contract properties request
+         * @param {ScpSchemasPatchContractRequest} scpSchemasPatchContractRequest Update contract properties request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateContract(id: string, patchContractRequest: PatchContractRequest, options?: any): AxiosPromise<ImportContact200Response> {
-            return localVarFp.updateContract(id, patchContractRequest, options).then((request) => request(axios, basePath));
+        updateContract(id: string, scpSchemasPatchContractRequest: ScpSchemasPatchContractRequest, options?: any): AxiosPromise<ImportContract200Response> {
+            return localVarFp.updateContract(id, scpSchemasPatchContractRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -317,7 +317,7 @@ export const ViewUpdateApiFactory = function (configuration?: Configuration, bas
  */
 export class ViewUpdateApi extends BaseAPI {
     /**
-     * Get a contract by id. This does not support getting a contract by address.
+     * Get a single contract that you\'ve imported or deployed. Retrieved using the contracts ID as opposed to the on-chain address.
      * @summary Get a contract
      * @param {string} id Contract id
      * @param {*} [options] Override http request option.
@@ -329,18 +329,18 @@ export class ViewUpdateApi extends BaseAPI {
     }
 
     /**
-     * List all contracts
+     * Fetch a list of contracts that you\'ve imported and/or deployed.
      * @summary List contracts
-     * @param {ListContractsBlockchainEnum} [blockchain] Blockchain is the blockchain filter for contracts
-     * @param {ListContractsContractInputTypeEnum} [contractInputType] ContractInputType is the input type filter for contracts
-     * @param {string} [deployerAddress] DeployerAddress is the deployer wallet address filter for contracts
-     * @param {string} [name] Name is the name filter for contracts
-     * @param {ListContractsStatusEnum} [status] Status is the status filter for contracts
-     * @param {string} [from] From is the start time of the query, inclusive
-     * @param {string} [to] To is the end time of the query, inclusive, default to current time
-     * @param {string} [pageBefore] PageBefore is used to return items before the given item exclusively. SHOULD NOT be used in conjunction with pageAfter
-     * @param {string} [pageAfter] PageAfter is used to return items after the given item exclusively. SHOULD NOT be used in conjunction with pageBefore
-     * @param {number} [pageSize] PageSize is the number of items to return
+     * @param {ListContractsBlockchainEnum} [blockchain] Filter by blockchain.
+     * @param {ListContractsContractInputTypeEnum} [contractInputType] Filter contracts by input type.
+     * @param {string} [deployerAddress] Filter contracts by deployer address.
+     * @param {string} [name] Filter contracts by name.
+     * @param {ListContractsStatusEnum} [status] Filter contracts by status.
+     * @param {string} [from] Queries items created since the specified date-time (inclusive).
+     * @param {string} [to] Queries items created before the specified date-time (inclusive).
+     * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next n items before the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.   SHOULD NOT be used in conjuction with pageAfter. 
+     * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next n items after the id, with n being specified by pageSize.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither pageAfter nor pageBefore are specified.  SHOULD NOT be used in conjuction with pageBefore. 
+     * @param {number} [pageSize] Limits the number of items to be returned.   Some collections have a strict upper bound that will disregard this value. In case the specified value is higher  than the allowed limit, the collection limit will be used.   If avoided, the collection will determine the page size itself. 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ViewUpdateApi
@@ -350,16 +350,16 @@ export class ViewUpdateApi extends BaseAPI {
     }
 
     /**
-     * Update off-chain contract properties
+     * Update the off-chain properties, such as description, of a contract that you\'ve imported or deployed. Updated using the contracts ID as opposed to the on-chain address.
      * @summary Update a contract
      * @param {string} id Contract id
-     * @param {PatchContractRequest} patchContractRequest Update contract properties request
+     * @param {ScpSchemasPatchContractRequest} scpSchemasPatchContractRequest Update contract properties request
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ViewUpdateApi
      */
-    public updateContract(id: string, patchContractRequest: PatchContractRequest, options?: AxiosRequestConfig) {
-        return ViewUpdateApiFp(this.configuration).updateContract(id, patchContractRequest, options).then((request) => request(this.axios, this.basePath));
+    public updateContract(id: string, scpSchemasPatchContractRequest: ScpSchemasPatchContractRequest, options?: AxiosRequestConfig) {
+        return ViewUpdateApiFp(this.configuration).updateContract(id, scpSchemasPatchContractRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -369,8 +369,6 @@ export class ViewUpdateApi extends BaseAPI {
 export const ListContractsBlockchainEnum = {
     Eth: 'ETH',
     EthGoerli: 'ETH-GOERLI',
-    Avax: 'AVAX',
-    AvaxFuji: 'AVAX-FUJI',
     Matic: 'MATIC',
     MaticMumbai: 'MATIC-MUMBAI'
 } as const;

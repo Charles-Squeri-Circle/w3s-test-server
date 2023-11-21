@@ -68,9 +68,9 @@ router.get("/users/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/users/token", async (req: Request, res: Response) => {
+router.post("/users/token", async (req: Request, res: Response) => {
   try {
-    const response = await usersAndPinsApi.getUserToken(req.body.userId);
+    const response = await usersAndPinsApi.getUserToken({userId: req.body.userId});
     delete response.headers['transfer-encoding'];
     res.header(response.headers).send(response.data);
   } catch (error) {

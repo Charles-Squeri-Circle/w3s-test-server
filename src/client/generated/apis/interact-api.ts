@@ -24,7 +24,7 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { ReadContract200Response } from '../models';
 // @ts-ignore
-import { ReadContractStateRequest } from '../models';
+import { ScpSchemasReadContractStateRequest } from '../models';
 /**
  * InteractApi - axios parameter creator
  * @export
@@ -32,18 +32,18 @@ import { ReadContractStateRequest } from '../models';
 export const InteractApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Read contract state by ABI
-         * @summary Execute a read function on a contract.
+         * Read the state of a contract you\'ve imported or deployed by providing the ABI function and applicable parameters.
+         * @summary Execute a read function on a contract
          * @param {string} id Contract id
-         * @param {ReadContractStateRequest} readContractStateRequest Read contract state by ABI request
+         * @param {ScpSchemasReadContractStateRequest} scpSchemasReadContractStateRequest Read contract state by executing a read ABI function.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readContract: async (id: string, readContractStateRequest: ReadContractStateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        readContract: async (id: string, scpSchemasReadContractStateRequest: ScpSchemasReadContractStateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('readContract', 'id', id)
-            // verify required parameter 'readContractStateRequest' is not null or undefined
-            assertParamExists('readContract', 'readContractStateRequest', readContractStateRequest)
+            // verify required parameter 'scpSchemasReadContractStateRequest' is not null or undefined
+            assertParamExists('readContract', 'scpSchemasReadContractStateRequest', scpSchemasReadContractStateRequest)
             const localVarPath = `/contracts/{id}/read`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -68,7 +68,7 @@ export const InteractApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(readContractStateRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(scpSchemasReadContractStateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -86,15 +86,15 @@ export const InteractApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = InteractApiAxiosParamCreator(configuration)
     return {
         /**
-         * Read contract state by ABI
-         * @summary Execute a read function on a contract.
+         * Read the state of a contract you\'ve imported or deployed by providing the ABI function and applicable parameters.
+         * @summary Execute a read function on a contract
          * @param {string} id Contract id
-         * @param {ReadContractStateRequest} readContractStateRequest Read contract state by ABI request
+         * @param {ScpSchemasReadContractStateRequest} scpSchemasReadContractStateRequest Read contract state by executing a read ABI function.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readContract(id: string, readContractStateRequest: ReadContractStateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReadContract200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readContract(id, readContractStateRequest, options);
+        async readContract(id: string, scpSchemasReadContractStateRequest: ScpSchemasReadContractStateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReadContract200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readContract(id, scpSchemasReadContractStateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -108,15 +108,15 @@ export const InteractApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = InteractApiFp(configuration)
     return {
         /**
-         * Read contract state by ABI
-         * @summary Execute a read function on a contract.
+         * Read the state of a contract you\'ve imported or deployed by providing the ABI function and applicable parameters.
+         * @summary Execute a read function on a contract
          * @param {string} id Contract id
-         * @param {ReadContractStateRequest} readContractStateRequest Read contract state by ABI request
+         * @param {ScpSchemasReadContractStateRequest} scpSchemasReadContractStateRequest Read contract state by executing a read ABI function.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readContract(id: string, readContractStateRequest: ReadContractStateRequest, options?: any): AxiosPromise<ReadContract200Response> {
-            return localVarFp.readContract(id, readContractStateRequest, options).then((request) => request(axios, basePath));
+        readContract(id: string, scpSchemasReadContractStateRequest: ScpSchemasReadContractStateRequest, options?: any): AxiosPromise<ReadContract200Response> {
+            return localVarFp.readContract(id, scpSchemasReadContractStateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -129,16 +129,16 @@ export const InteractApiFactory = function (configuration?: Configuration, baseP
  */
 export class InteractApi extends BaseAPI {
     /**
-     * Read contract state by ABI
-     * @summary Execute a read function on a contract.
+     * Read the state of a contract you\'ve imported or deployed by providing the ABI function and applicable parameters.
+     * @summary Execute a read function on a contract
      * @param {string} id Contract id
-     * @param {ReadContractStateRequest} readContractStateRequest Read contract state by ABI request
+     * @param {ScpSchemasReadContractStateRequest} scpSchemasReadContractStateRequest Read contract state by executing a read ABI function.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof InteractApi
      */
-    public readContract(id: string, readContractStateRequest: ReadContractStateRequest, options?: AxiosRequestConfig) {
-        return InteractApiFp(this.configuration).readContract(id, readContractStateRequest, options).then((request) => request(this.axios, this.basePath));
+    public readContract(id: string, scpSchemasReadContractStateRequest: ScpSchemasReadContractStateRequest, options?: AxiosRequestConfig) {
+        return InteractApiFp(this.configuration).readContract(id, scpSchemasReadContractStateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

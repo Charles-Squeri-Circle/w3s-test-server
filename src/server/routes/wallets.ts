@@ -54,6 +54,8 @@ router.post("/developer/wallets", async (req: Request, res: Response) => {
 
 router.get("/wallets", async (req: Request, res: Response) => {
   try {
+    console.log(req.query.walletSetId);
+    
     const response = await walletsApi.listWallets(
       req.header("X-User-Token"),
       //@ts-ignore

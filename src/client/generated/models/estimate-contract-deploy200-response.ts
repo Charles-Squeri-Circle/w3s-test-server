@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { ContractDeploymentEstimateFeeResponse } from './contract-deployment-estimate-fee-response';
+import { ScpSchemasContractDeploymentEstimateFeeResponse } from './scp-schemas-contract-deployment-estimate-fee-response';
 
 /**
  * 
@@ -25,9 +25,9 @@ import { ContractDeploymentEstimateFeeResponse } from './contract-deployment-est
 export interface EstimateContractDeploy200Response {
     /**
      * 
-     * @type {ContractDeploymentEstimateFeeResponse}
+     * @type {ScpSchemasContractDeploymentEstimateFeeResponse}
      * @memberof EstimateContractDeploy200Response
      */
-    'data'?: ContractDeploymentEstimateFeeResponse;
+    'data'?: ScpSchemasContractDeploymentEstimateFeeResponse;
 }
 

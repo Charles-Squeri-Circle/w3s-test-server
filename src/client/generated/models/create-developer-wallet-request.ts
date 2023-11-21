@@ -15,7 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Blockchain } from './blockchain';
+import { AccountType } from './account-type';
+// May contain unused imports in some cases
+// @ts-ignore
+import { SchemasBlockchain } from './schemas-blockchain';
 // May contain unused imports in some cases
 // @ts-ignore
 import { WalletMetadata } from './wallet-metadata';
@@ -33,11 +36,17 @@ export interface CreateDeveloperWalletRequest {
      */
     'idempotencyKey': string;
     /**
-     * Blockchain(s) the requested wallets will be created on.
-     * @type {Array<Blockchain>}
+     * 
+     * @type {AccountType}
      * @memberof CreateDeveloperWalletRequest
      */
-    'blockchains': Array<Blockchain>;
+    'accountType'?: AccountType;
+    /**
+     * Blockchain(s) the requested wallets will be created on.
+     * @type {Array<SchemasBlockchain>}
+     * @memberof CreateDeveloperWalletRequest
+     */
+    'blockchains': Array<SchemasBlockchain>;
     /**
      * Number of wallets that will be created per specified blockchain.
      * @type {number}
@@ -63,4 +72,6 @@ export interface CreateDeveloperWalletRequest {
      */
     'walletSetId': string;
 }
+
+
 

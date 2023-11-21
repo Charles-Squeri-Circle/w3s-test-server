@@ -90,7 +90,7 @@ export interface CreateTransferTransactionForEndUserRequest {
      */
     'tokenId': string;
     /**
-     * Unique system generated identifier of the wallet. Required when source Address and blockchain is not provided. Mutually exclusive
+     * Unique system generated identifier of the wallet. Required when source Address and blockchain is not provided. Mutually exclusive. For contract deploys this wallet ID will be used as the source.
      * @type {string}
      * @memberof CreateTransferTransactionForEndUserRequest
      */

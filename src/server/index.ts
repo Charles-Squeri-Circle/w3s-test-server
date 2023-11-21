@@ -11,6 +11,8 @@ import deployImportContracts from "./routes/deployImportContracts";
 import interactContracts from "./routes/interactContracts";
 import viewUpdateContracts from "./routes/viewUpdateContracts";
 import createUserTokenChallengeId from "./routes/createUserTokenChallengeId";
+import signing from "./routes/signing";
+import templates from "./routes/templates";
 import createEntitySecretCiphertext from "./routes/createEntitySecretCiphertext";
 import { createEntitySecretCiphertext as initEntitySecretCiphertext  } from "../client/custom/apis/createEntitySecretCiphertext";
 
@@ -30,6 +32,8 @@ app.use("/v1/w3s", deployImportContracts);
 app.use("/v1/w3s", interactContracts);
 app.use("/v1/w3s", viewUpdateContracts);
 app.use("/v1/w3s", createUserTokenChallengeId);
+app.use("/v1/w3s", signing);
+app.use("/v1/w3s", templates);
 app.use("/v1/w3s", createEntitySecretCiphertext);
 
 // Starts express server, checks setup, and initializes entity secret.

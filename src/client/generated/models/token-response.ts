@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Blockchain } from './blockchain';
+import { SchemasBlockchain } from './schemas-blockchain';
 // May contain unused imports in some cases
 // @ts-ignore
 import { TokenStandard } from './token-standard';
@@ -46,10 +46,10 @@ export interface TokenResponse {
     'standard'?: TokenStandard;
     /**
      * 
-     * @type {Blockchain}
+     * @type {SchemasBlockchain}
      * @memberof TokenResponse
      */
-    'blockchain': Blockchain;
+    'blockchain': SchemasBlockchain;
     /**
      * Number of decimal places shown in the token amount.
      * @type {number}

@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { ReadContractStateResponse } from './read-contract-state-response';
+import { ScpSchemasReadContractStateResponse } from './scp-schemas-read-contract-state-response';
 
 /**
  * 
@@ -25,9 +25,9 @@ import { ReadContractStateResponse } from './read-contract-state-response';
 export interface ReadContract200Response {
     /**
      * 
-     * @type {ReadContractStateResponse}
+     * @type {ScpSchemasReadContractStateResponse}
      * @memberof ReadContract200Response
      */
-    'data'?: ReadContractStateResponse;
+    'data'?: ScpSchemasReadContractStateResponse;
 }
 

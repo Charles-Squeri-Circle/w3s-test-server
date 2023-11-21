@@ -15,10 +15,13 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Blockchain } from './blockchain';
+import { AccountType } from './account-type';
 // May contain unused imports in some cases
 // @ts-ignore
 import { MetadataField } from './metadata-field';
+// May contain unused imports in some cases
+// @ts-ignore
+import { SchemasBlockchain } from './schemas-blockchain';
 
 /**
  * 
@@ -33,11 +36,17 @@ export interface CreateEndUserWalletRequest {
      */
     'idempotencyKey': string;
     /**
-     * Blockchain(s) the requested wallets will be created on.
-     * @type {Array<Blockchain>}
+     * 
+     * @type {AccountType}
      * @memberof CreateEndUserWalletRequest
      */
-    'blockchains': Array<Blockchain>;
+    'accountType'?: AccountType;
+    /**
+     * Blockchain(s) the requested wallets will be created on.
+     * @type {Array<SchemasBlockchain>}
+     * @memberof CreateEndUserWalletRequest
+     */
+    'blockchains': Array<SchemasBlockchain>;
     /**
      * List of metadata fields to associate with the corresponding wallet.
      * @type {Array<MetadataField>}
@@ -45,4 +54,6 @@ export interface CreateEndUserWalletRequest {
      */
     'metadata'?: Array<MetadataField>;
 }
+
+
 

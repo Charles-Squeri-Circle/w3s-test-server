@@ -78,7 +78,9 @@ export const ChallengeTypeEnum = {
     CreateTransaction: 'CREATE_TRANSACTION',
     AccelerateTransaction: 'ACCELERATE_TRANSACTION',
     CancelTransaction: 'CANCEL_TRANSACTION',
-    ContractExecution: 'CONTRACT_EXECUTION'
+    ContractExecution: 'CONTRACT_EXECUTION',
+    SignMessage: 'SIGN_MESSAGE',
+    SignTypeddata: 'SIGN_TYPEDDATA'
 } as const;
 
 export type ChallengeTypeEnum = typeof ChallengeTypeEnum[keyof typeof ChallengeTypeEnum];
