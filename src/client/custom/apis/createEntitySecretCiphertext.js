@@ -21,7 +21,7 @@ async function entitySecretCheck() {
 
 const developerAccountApi = new DeveloperAccountApi({
   accessToken: process.env.API_KEY,
-  isJsonMime: (mime: string) => mime.includes("json"),
+  isJsonMime: (mime) => mime.includes("json"),
 });
 async function getPublicKey() {
   try {
@@ -33,7 +33,7 @@ async function getPublicKey() {
 }
 
 export async function createEntitySecretCiphertext() {
-  const secret = await entitySecretCheck()!;
+  const secret = await entitySecretCheck();
   const apiPublicKey = await getPublicKey();
   if (typeof apiPublicKey === "string") {
     // @ts-ignore

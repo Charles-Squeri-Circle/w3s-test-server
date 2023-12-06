@@ -7,15 +7,15 @@ import { userTokenChallengeId } from "../models/userTokenChallengeId";
 
 const developerAccountApi = new DeveloperAccountApi({
   accessToken: process.env.API_KEY,
-  isJsonMime: (mime: string) => mime.includes("json"),
+  isJsonMime: (mime) => mime.includes("json"),
 });
 const usersAndPinsApi = new UsersAndPinsApi({
   accessToken: process.env.API_KEY,
-  isJsonMime: (mime: string) => mime.includes("json"),
+  isJsonMime: (mime) => mime.includes("json"),
 });
 const walletsApi = new WalletsApi({
   accessToken: process.env.API_KEY,
-  isJsonMime: (mime: string) => mime.includes("json"),
+  isJsonMime: (mime) => mime.includes("json"),
 });
 
 export async function createUserTokenChallengeId() {
@@ -30,16 +30,16 @@ export async function createUserTokenChallengeId() {
     let initializeUserResponseData;
     if (createUserTokenResponseData && createUserTokenResponseData.data) {
       initializeUserResponseData = await initializeUser(
-        createUserTokenResponseData?.data?.userToken
+        createUserTokenResponseData.data.userToken
       );
     }
 
-    const createUserTokenChallengeId: userTokenChallengeId = {
+    const createUserTokenChallengeId = {
       data: {
-        appId: getAppIdResponseData?.data?.appId,
-        userToken: createUserTokenResponseData?.data?.userToken,
-        encryptionKey: createUserTokenResponseData?.data?.encryptionKey,
-        challengeId: initializeUserResponseData?.data?.challengeId,
+        appId: getAppIdResponseData.data.appId,
+        userToken: createUserTokenResponseData.data.userToken,
+        encryptionKey: createUserTokenResponseData.data.encryptionKey,
+        challengeId: initializeUserResponseData.data.challengeId,
       },
     };
 
@@ -60,7 +60,7 @@ async function getAppId() {
 }
 
 // 2. Create a User
-async function createUser(userId: string) {
+async function createUser(userId) {
   try {
     await usersAndPinsApi.createUser({
       userId: userId,
@@ -71,7 +71,7 @@ async function createUser(userId: string) {
 }
 
 // 3. Acquire a Session Token
-async function createUserToken(userId: string) {
+async function createUserToken(userId) {
   try {
     const response = await usersAndPinsApi.getUserToken({
       userId: userId,
@@ -83,7 +83,7 @@ async function createUserToken(userId: string) {
 }
 
 // 4. Initialize the User's Account and Acquire the Challenge ID
-async function initializeUser(userToken: string) {
+async function initializeUser(userToken) {
   try {
     const response = await usersAndPinsApi.createUserWithPinChallenge(
       userToken,
@@ -102,7 +102,7 @@ async function initializeUser(userToken: string) {
 // 5. Create a Wallet in the Sample App
 
 // 6. Check User Status
-async function getUserStatus(userToken: string) {
+async function getUserStatus(userToken) {
   try {
     const response = await usersAndPinsApi.getUserByToken(userToken);
     return response.data;
@@ -112,7 +112,7 @@ async function getUserStatus(userToken: string) {
 }
 
 // 7. Check Wallet Status
-async function getUserWallets(userToken: string) {
+async function getUserWallets(userToken) {
   try {
     const response = await walletsApi.listWallets(userToken);
     return response.data;

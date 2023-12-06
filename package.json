@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Make sure to run the `npm install` in the root of the directory and `client/generated-sources/openapi`.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "npx nodemon src/server/index.ts",
+    "dev": "npx nodemon src/server/index.js",
     "start": "ts-node src/server/index.ts",
     "build": "tsc",
     "serve": "node dist/index.js",
@@ -23,6 +24,9 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@circle-fin/developer-controlled-wallets": "^1.0.0",
+    "@circle-fin/smart-contract-platform": "^1.0.1",
+    "@circle-fin/user-controlled-wallets": "^1.0.2",
     "axios": "^1.5.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
